@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeit</title>
+    <link rel="stylesheet" href="stylesheet_mainpage.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Alegreya SC"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Alegreya Sans SC"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Alegreya"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Alegreya Sans"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Alatsi"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="logo">
+        <img src="Resource/logo.png" alt="image not found" class="logoicon" />
+        <label for="brandname" class="brandname">Timeit</label>
+      </div>
+      <div class="profile">
+        <img src="Resource/Group 1profile.png" alt="asdf" class="profile_pic" />
+        <div class="profilename">
+          <label for="name" class="name">Richie Soshan</label>
+          <label for="email id">richie@gmail.com</label>
+        </div>
+      </div>
+    </div>
+    <div class="notification" id="notification">
+    </div>
+    <div class="mid_section">
+      <div class="timer_panel">
+        <div class="taskpanel">
+          <div class="task_name">
+            <button for="create" class="create" id="popup-trigger"  contenteditable="true">
+              + &nbsp; &nbsp; Start new task
+            </button>
+
+            <div class="popup" id="myForm">
+              <div class="blocker" onclick="closeForm()"></div>
+              <form class="form-container" >
+                <input
+                  type="text"
+                  placeholder="Enter Task Name"
+                  name="task name"
+                  class="taskname"
+                  id="taskname"
+                  value=""
+                  required
+                
+                />
+                <input
+                  type="text"
+                  placeholder="Tag Name(optional)"
+                  name="Tag name"
+                  class="tagname"
+                  id="tagname"
+                  value=""
+                />
+                <button type="button" class="btn" id="create_task" onclick="closeForm()">
+                  Create Task
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="schedule">
+          <button
+            for="schedule"
+            class="schedule_time"
+            id="popup-trigger2"
+            onclick="openForm2()"
+          >
+            <img src="Resource/Vectorclock.png" alt="na" class="clock" /> &nbsp;Schedule
+          </button>
+          <div class="schedule_popup" id="myForm2" >
+            <div class="blocker" onclick="closeForm2()"></div>
+            <form class="form-container">
+              <label for="till">End time</label>
+              <input
+                type="time"
+                placeholder="Duration of the Task"
+                name="task name"
+                class="duration"
+                id="duration"
+                required
+              />
+            </form>
+          </div>
+        </div>
+        <img src="Resource/Arrow 2arrow.png" alt="arrow" class="arrow" />
+        <div for="timer" class="timer" >
+          <label  id="minutes" contenteditable="true">00</label>:
+          <label  id="seconds" contenteditable="true">00</label>
+        </div>
+
+        <img src="Resource/Vector.png" alt="" class="play" id="play"/>
+        <img src="Resource/circle-stop-solid (1) 1stop_button.png" alt="" class="pause" id="pause"/>
+
+      </div>
+    </div>
+    <div class="historyPanel" id="history">
+      <div class="history_section">
+        <div class="history">
+          <label for="history_text" class="history_text">History</label>
+        </div>
+      </div>
+      <div class="total_time_container">
+        <label for="time_total" class="total_time_text">Total time:</label>
+        <div for="timer" class="total_time" >
+          <label  id="minutes" >00</label>:
+          <label  id="seconds" >00</label>
+        </div>
+      </div>
+      <div class="timelog">
+        <div class="timelog_panel" id="timelog_panel">
+          <div class="menubar">
+            <label for="date" class="day">Today</label>
+           
+            <div for="timer" class="daily_time" >
+              <label  id="minutes" >00</label>:
+              <label  id="seconds" >00</label>
+            </div>
+          </div>
+          <div class="log" id="log1">
+            <div class="log_entry">
+              <label for="date" class="taskname_entry" id="taskname_entry1" contenteditable="true"
+                >Task name</label
+              >
+              <div class="time_play">
+                <img src="Resource/Vector.png" alt="" class="resume" id="resume"/>
+                <img src="Resource/circle-stop-solid (1) 1stop_button.png" alt="" class="pauseLog" id="pauseresume"/>
+                <div for="timer" class="duration" >
+                  <label  id="logminutes" contenteditable="true">00</label>:
+                  <label  id="logseconds" contenteditable="true">00</label>
+                </div>
+                <button class="menu" onclick="openForm3()">:</button> 
+              </div>
+            </div>
+            <div class="edit_popup" id="myForm3">
+                <div class="blocker" onclick="closeForm3()"></div>
+                <form class="form-container">
+                  <button type="button" class="delete" onclick="closeForm3()">
+                    delete
+                  </button>
+                </form>
+              </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js">  
+    </script>
+  </body>
+</html>

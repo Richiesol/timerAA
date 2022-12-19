@@ -1,0 +1,385 @@
+body {
+  margin: 0;
+  width: 1366px;
+  height: 663px;
+  background-color: rgb(0, 0, 0, 0.1);
+}
+.header {
+  display: flex;
+  height: 10%;
+  background-color: #fff;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.21);
+  box-shadow: 0 0 20px #ccc;
+  padding: 0 1% 0 1%;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  width: 40%;
+  align-items: center;
+}
+.logoicon {
+  width: 10%;
+}
+.brandname {
+  font-family: "Alegreya SC";
+  font-size: 25px;
+  font-weight: 500;
+}
+.profile {
+  display: flex;
+  align-items: center;
+  width: 25%;
+  display: flex;
+  justify-content: end;
+}
+.profile_pic {
+  width: 10%;
+  height: min-content;
+}
+.profilename {
+  padding-left: 2%;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+.notification{
+  display:none;
+  background-color: red;
+  width:20%;
+  height:10%;
+  position:fixed;
+  top:12%;
+  right:0%;
+  border-radius: 7px;
+  animation-name: example;
+  animation-duration: 4s;
+}
+.mid_section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 20%;
+}
+.timer_panel {
+  display: flex;
+  width: 60%;
+  height: 40%;
+  border-radius: 7px;
+  border: 2px solid rgba(0, 0, 0, 0.21);
+  background-color: #fff;
+  align-items: center;
+}
+.taskpanel {
+  display: flex;
+  align-items: center;
+  width: 60%;
+  height: 100%;
+  padding-left: 1%;
+}
+.task_name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35%;
+  height: 70%;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.11);
+}
+.create {
+  text-align: center;
+  font-family: "Alegreya Sans";
+  color: rgba(0, 0, 0, 0.503);
+  font-size: 17px;
+  font-weight: 600;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+.schedule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  height: 70%;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.11);
+}
+.schedule_time {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Alegreya Sans";
+  color: rgba(0, 0, 0, 0.503);
+  font-size: 17px;
+  font-weight: 600;
+  width: 90%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+.clock {
+  align-self: center;
+  width: 22%;
+}
+.arrow {
+  padding: 2%;
+}
+.timer {
+  display: flex;
+  width: 10%;
+  justify-content: center;
+  height: 50%;
+  font-size: 25px;
+  font-family: "Alatsi";
+  align-items: center;
+}
+
+.play {
+  display:block;
+  width: 5%;
+  padding-right: 2%;
+  padding-left: 2%;
+}
+.pause{
+  display:none;
+  width: 5%;
+  padding-right: 2%;
+  padding-left: 2%;
+}
+.popup {
+  display: none;
+  position: fixed;
+  border-radius: 7px;
+  top: 32%;
+  right: 60%;
+  z-index: 10;
+}
+.form-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 20px 7px rgba(126, 126, 126, 0.5);
+  border-radius: 7px;
+}
+.form-container input[type="text"] {
+  width: 80%;
+  border-radius: 25px;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+.form-container input[type="text"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.form-container .btn {
+  background-color: red;
+  border-radius: 25px;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 60%;
+  height: 20%;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.popup {
+  display: none;
+}
+.popup .show {
+  display: block;
+}
+
+.schedule_popup {
+  display: none;
+  position: fixed;
+  border-radius: 7px;
+  top: 32%;
+  left: 56%;
+  z-index: 10;
+}
+.edit_popup {
+  display: none;
+  border-radius: 7px;
+  justify-content: center;
+  width: 10%;
+  height:75%;
+  top: 75%;
+  right: 60%;
+  z-index: 10;
+}
+.delete {
+  font-size: large;
+  font-family: "Alegreya Sans";
+  border: none;
+}
+.blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgb(0, 0, 0, 0);
+}
+.historyPanel{
+  display: none;
+  flex-direction: column;
+  width:100%;
+  height:69%
+}
+.history_section {
+  justify-content: center;
+  display: flex;
+  height: 10%;
+  width: 100%;
+}
+.history {
+  justify-content: center;
+  display: flex;
+  justify-self: center;
+  height: 100%;
+  width: 60%;
+  border-bottom: 2px solid rgb(155, 155, 155);
+}
+.history_text {
+  position: relative;
+  font-family: "Alegreya Sans";
+  width: 10%;
+  height: 35%;
+  border-radius: 10px;
+  top: 85%;
+  background-color: rgb(229 229 229);
+  text-align: center;
+}
+.total_time_container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 10%;
+  width: 100%;
+}
+.total_time_text {
+  font-family: "Alegreya Sans";
+  font-size: medium;
+}
+.total_time {
+  padding-left: 0.5%;
+  font-family: "Alatsi";
+}
+.timelog {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+}
+.timelog_panel {
+  display: flex;
+  height: auto;
+  width: 60%;
+  justify-content: start;
+  flex-direction: column;
+}
+.menubar {
+  display: flex;
+  position: sticky;
+  background-color: #fff;
+  width: 100%;
+  align-items: center;
+  height: 25%;
+  min-height: 25%;
+  border: 2px solid rgba(0, 0, 0, 0.19);
+  border-bottom: 0;
+  border-radius: 7px 7px 0 0;
+  justify-content: space-between;
+}
+.day {
+  padding-left: 2%;
+  text-align: center;
+  font-family: "Alegreya";
+  font-weight: 600;
+  font-size: 20px;
+}
+.daily_time {
+  text-align: center;
+  font-family: "Alatsi";
+  font-weight: 600;
+  font-size: 20px;
+  padding-right: 5%;
+}
+.log{
+  display: flex;
+  width:125%;
+  height:25%;
+  min-height: 25%;
+}
+.log_entry {
+  display: flex;
+  background-color: #fff;
+  width: 80%;
+  align-items: center;
+  height: 100%;
+  border: 2px solid rgba(155, 155, 155, 0.466);
+  border-radius: 0 0 0 0;
+  justify-content: space-between;
+}
+.taskname_entry {
+  padding-left: 2%;
+  text-align: center;
+  font-family: "Alegreya";
+  font-weight: 400;
+  font-size: 20px;
+}
+.resume {
+  display:block;
+  width: 25%;
+  height: 55%;
+}
+.pauseLog{
+  display:none;
+  width: 25%;
+  height: 55%;
+}
+.duration {
+  text-align: center;
+  font-family: "Alatsi";
+  font-weight: 600;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.428);
+  padding-right: 5%;
+  border:none;
+}
+.duration:focus{
+  border:none;
+  outline: none;
+}
+.time_play {
+  display: flex;
+  width: 16%;
+  height: 100%;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+.menu {
+  display: flex;
+  height: 100%;
+  width: 20%;
+  padding-top: 3%;
+  font-weight: 900;
+  font-size: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgba(0, 0, 0, 0.315);
+  border: none;
+  background-color: #fff;
+}
+label:focus {
+  outline: none;
+}
