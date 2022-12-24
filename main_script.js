@@ -129,7 +129,6 @@ pause_button.addEventListener("click", function () {
   }
   addDataToLog();
 });
-
 function addLogTab() {
     let clonedLogTab = logtab.cloneNode(true);
     clonedLogTab.id = `log${count}`;
