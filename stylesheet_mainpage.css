@@ -339,12 +339,12 @@ body {
 }
 .resume {
   display:block;
-  width: 25%;
+  width: 20%;
   height: 55%;
 }
 .pauseLog{
   display:none;
-  width: 25%;
+  width: 20%;
   height: 55%;
 }
 .duration {
