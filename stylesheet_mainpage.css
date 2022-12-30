@@ -317,8 +317,6 @@ body {
 .log{
   display: flex;
   width:125%;
-  height:25%;
-  min-height: 25%;
 }
 .log_entry {
   display: flex;
@@ -382,4 +380,18 @@ body {
 }
 label:focus {
   outline: none;
+}
+
+.logger{
+  display: flex;
+    height: max-content;
+    width: 100%;
+    justify-content: start;
+    flex-direction: column-reverse;
+}
+
+.tasktag{
+  display: flex;
+    width: 50%;
+    padding-left: 1%;
 }

@@ -123,8 +123,8 @@
       <div class="total_time_container">
         <label for="time_total" class="total_time_text">Total time:</label>
         <div for="timer" class="total_time" >
-          <label  id="minutes" >00</label>:
-          <label  id="seconds" >00</label>
+          <label  id="totalminutes" >00</label>:
+          <label  id="totalseconds" >00</label>
         </div>
       </div>
       <div class="timelog">
@@ -132,38 +132,47 @@
           <div class="menubar">
             <label for="date" class="day">Today</label>
             <div for="timer" class="daily_time" >
-              <label  id="minutes" >00</label>:
-              <label  id="seconds" >00</label>
+              <label  id="todayminutes" >00</label>:
+              <label  id="todayseconds" >00</label>
             </div>
           </div>
-          <div class="log" id="log1">
-            <div class="log_entry">
-              <label for="date" class="taskname_entry" id="taskname_entry1" contenteditable="true"
-                >Task name</label
-              >
-              <div class="time_play">
-                <img src="Resource/Vector.png" alt="" class="resume" id="resume"/>
-                <img src="Resource/circle-stop-solid (1) 1stop_button.png" alt="" class="pauseLog" id="pauseresume"/>
-                <div for="timer" class="duration" >
-                  <label  id="logminutes" contenteditable="true">00</label>:
-                  <label  id="logseconds" contenteditable="true">00</label>
+          <div class="logger" id="logger">
+            <div class="log" id="log1">
+              <div class="log_entry">
+                <div class="tasktag">
+                  <label for="date" class="taskname_entry" id="taskname_entry1" contenteditable="true"
+                    >Task name</label
+                  > 
+                  <label for="date" class="taskname_entry" id="taskname_entry1" contenteditable="true"
+                    >|</label
+                  > 
+                  <label for="date" class="taskname_entry" id="tagname" contenteditable="true"
+                    >Task name</label
+                  > 
                 </div>
-                <button class="menu" onclick="openForm3()">:</button> 
+                <div class="time_play">
+                  <img src="Resource/Vector.png" alt="" class="resume" id="resume" onclick="resumebutton(event)"/>
+                  <img src="Resource/circle-stop-solid (1) 1stop_button.png" alt="" class="pauseLog" id="pauseresume" onclick="stopResumeButton(event)"/>
+                  <div for="timer" class="duration" >
+                    <label  class="logmin" id="logminutes">00</label>:
+                    <label  class="logsec" id="logseconds" >00</label>
+                  </div>
+                  <button class="menu" onclick="openForm3(event)">:</button> 
+                </div>
               </div>
+              <div class="edit_popup" id="myForm3">
+                  <div class="blocker" onclick="closeForm3(event)"></div>
+                  <form class="form-container">
+                    <button type="button" class="delete" onclick="deletelog(event)">
+                      delete
+                    </button>
+                  </form>
+                </div>
             </div>
-            <div class="edit_popup" id="myForm3">
-                <div class="blocker" onclick="closeForm3()"></div>
-                <form class="form-container">
-                  <button type="button" class="delete" onclick="closeForm3()">
-                    delete
-                  </button>
-                </form>
-              </div>
           </div>
         </div>
       </div>
     </div>
-
     <script src="script.js">  
     </script>
   </body>

@@ -14,9 +14,12 @@ function openForm2() {
   document.getElementById("myForm2").style.display = "block";
   form2.classList.add("show");
 }
-function openForm3() {
-  document.getElementById("myForm3").style.display = "block";
-  form3.classList.add("show");
+function openForm3(event) {
+  let target = event.target;
+  let outerDiv = target.closest('.log_entry');
+  console.log(outerDiv.nextElementSibling)
+  outerDiv.nextElementSibling.style.display = "block";
+  outerDiv.nextElementSibling.classList.add("show");
 }
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
@@ -26,11 +29,24 @@ function closeForm2() {
   document.getElementById("myForm2").style.display = "none";
   form2.classList.remove("show");
 }
-function closeForm3() {
-  document.getElementById("myForm3").style.display = "none";
-  form3.classList.remove("show");
+function closeForm3(event) {
+  let target = event.target;
+  let outerDiv = target.closest('.edit_popup');
+  outerDiv.style.display = "none";
+  outerDiv.classList.remove("show");
 }
-
+function deletelog(event){
+  let target = event.target;
+  let outerDiv = target.closest('.log'); 
+  if(logger.childElementCount == 1){
+    historyPanel.style.display = "none";
+    count = 0;
+    closeForm3(event)
+  }
+  else{
+    outerDiv.remove()
+  }
+}
 const taskName = document.getElementById("taskname");
 const tagName = document.getElementById("tagname");
 const create_task_button = document.getElementById("create_task");
@@ -38,11 +54,9 @@ const duration = document.getElementById("duration");
 const play_button = document.getElementById("play");
 const pause_button = document.getElementById("pause");
 const logTaskName = document.getElementById("taskname_entry");
-const resumeButton = document.getElementById("resume");
-const stopResumeButton = document.getElementById("pauseresume");
 const historyPanel = document.getElementById("history");
 const logtab = document.getElementById("log1");
-const timelog_panel = document.getElementById("timelog_panel")
+const logger = document.getElementById("logger")
 
 let taskNameContent;
 let tagNameContent;
@@ -77,17 +91,27 @@ create_task_button.addEventListener("click", function () {
     taskNameContent = "null";
   }
 });
-resumeButton.addEventListener("click", function () {
-  resume(logMinutesLabel, logSecondsLabel);
-  resumeButton.style.display = "none";
-  stopResumeButton.style.display = "block";
-});
-stopResumeButton.addEventListener("click", function () {
+
+
+function resumebutton(event){
+  let target = event.target;
+  let outerDiv = target.closest('.time_play');
+  let timerDiv = outerDiv.lastElementChild.previousElementSibling
+  let logMin = timerDiv.firstElementChild;
+  let logSec = timerDiv.lastElementChild;
+  resume(logMin, logSec);
+  outerDiv.firstElementChild.style.display = "none";
+  outerDiv.firstElementChild.nextElementSibling.style.display = "block";
+};
+function stopResumeButton(event) {
+  let target = event.target;
+  let outerDiv = target.closest('.time_play');
   clearInterval(timer_interval);
-  resumeButton.style.display = "block";
-  stopResumeButton.style.display = "none";
+  outerDiv.firstElementChild.style.display = "block";
+  outerDiv.firstElementChild.nextElementSibling.style.display = "none";
   totalSeconds = 0;
-});
+  updateTotal();
+};
 duration.addEventListener("input", function () {
   let current_time = currentTime();
   let difference =
@@ -112,7 +136,7 @@ play_button.addEventListener("click", function () {
   play_button.style.display = "none";
   pause_button.style.display = "block";
 });
-pause_button.addEventListener("click", function () {
+pause_button.addEventListener("click", function () { 
   count++;
   let totalDuration = minutesLabel.innerHTML + secondsLabel.innerHTML;
   save_data(taskNameContent, tagNameContent, totalDuration);
@@ -120,7 +144,6 @@ pause_button.addEventListener("click", function () {
   pause_button.style.display = "none";
   play_button.style.display = "block";
   reset();
-  console.log(count)
   if ((count == 1)) {
     showHistory();
   }
@@ -131,17 +154,43 @@ pause_button.addEventListener("click", function () {
 });
 
 function addLogTab() {
+
     let clonedLogTab = logtab.cloneNode(true);
     clonedLogTab.id = `log${count}`;
-    timelog_panel.appendChild(clonedLogTab);
+    logger.appendChild(clonedLogTab);
   }
-function addDataToLog() {
-  document.getElementById(`taskname_entry1`).innerText = data[count]["taskName"];
-  document.getElementById(`logminutes`).innerText = data[count]["duration"].slice(0, 2);
-  document.getElementById(`logseconds`).innerText = data[count]["duration"].slice(-2);
+function addDataToLog(){
+  logger.lastElementChild.firstElementChild.firstElementChild.firstElementChild.innerText = data[count]["taskName"];
+  logger.lastElementChild.firstElementChild.firstElementChild.lastElementChild.innerText = data[count]["tag"];
+  logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild.previousElementSibling.firstElementChild.innerText = data[count]["duration"].slice(0, 2);
+  logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild.previousElementSibling.lastElementChild.innerText = data[count]["duration"].slice(-2);
+  updateTotal();
+}
+function updatemin(){
+  let min = document.querySelectorAll(".logmin");
+  let sec = document.querySelectorAll(".logsec");
+  let totalMin = 0;
+  let totalSec = 0;
+  // console.log(min)
+  updateTotal();
+}
+
+function updateTotal(){
+  let min = document.querySelectorAll(".logmin");
+  let sec = document.querySelectorAll(".logsec");
+  let totalMin = 0;
+  let totalSec = 0;
+  for(let iter=0;iter< min.length;iter++){
+    totalMin += parseInt(min[iter].innerText);
+  }
+  for(let iter=0;iter< sec.length;iter++){
+    totalSec += parseInt(sec[iter].innerText);
+  }
+  document.getElementById('totalminutes').innerText= document.getElementById('todayminutes').innerText=pad(parseInt(totalSec/60) + totalMin);
+  document.getElementById('totalseconds').innerText= document.getElementById('todayseconds').innerText=pad(totalSec%60);
 }
 function save_data(taskname, tagname, duration) {
-  if (taskname == undefined) {
+  if (taskname == undefined || taskname == "null"){
     taskname = "N/A";
   }
   if (tagname == undefined) {
