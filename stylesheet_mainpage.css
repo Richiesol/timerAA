@@ -52,9 +52,9 @@ body {
   top:12%;
   right:0%;
   border-radius: 7px;
-  animation-name: example;
-  animation-duration: 4s;
+  
 }
+
 .mid_section {
   display: flex;
   justify-content: center;
@@ -394,4 +394,22 @@ label:focus {
   display: flex;
     width: 50%;
     padding-left: 1%;
+}
+
+.closemodal{
+  color: #000000;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  border:none;
+  align-self: self-start;
+  height: fit-content;
+}
+.errormessage{
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width:90%;
+  display: flex;
+  height:100%;
 }

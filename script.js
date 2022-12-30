@@ -17,7 +17,6 @@ function openForm2() {
 function openForm3(event) {
   let target = event.target;
   let outerDiv = target.closest('.log_entry');
-  console.log(outerDiv.nextElementSibling)
   outerDiv.nextElementSibling.style.display = "block";
   outerDiv.nextElementSibling.classList.add("show");
 }
@@ -57,6 +56,7 @@ const logTaskName = document.getElementById("taskname_entry");
 const historyPanel = document.getElementById("history");
 const logtab = document.getElementById("log1");
 const logger = document.getElementById("logger")
+const errormessage = document.getElementById("errormessage")
 
 let taskNameContent;
 let tagNameContent;
@@ -73,8 +73,8 @@ let totalMin;
 let data = {};
 
 let timeExceed = setInterval(() => {
-  if (parseInt(totalSeconds / 60) >= totalMin) {
-    error_message();
+  if (parseInt(totalSeconds / 60) == totalMin) {
+    error_message("Time Exceeded");
   }
 }, 500);
 
@@ -118,7 +118,7 @@ duration.addEventListener("input", function () {
     parseInt(duration.value.replace(":", "")) -
     parseInt(current_time.replace(":", ""));
   if (difference < 0) {
-    error_message();
+    error_message("Please input a proper time");
     duration.value = current_time;
     minutesLabel.innerHTML = "00";
   } else {
@@ -171,7 +171,6 @@ function updatemin(){
   let sec = document.querySelectorAll(".logsec");
   let totalMin = 0;
   let totalSec = 0;
-  // console.log(min)
   updateTotal();
 }
 
@@ -217,10 +216,13 @@ function currentTime() {
   });
   return realTime;
 }
-function error_message() {
+function error_message(str) {
   clearInterval(timeExceed);
-  alert("Please enter a proper time");
+errormessage.innerText = str
   notificationLabel.style.display = "flex";
+}
+function closenotification(){
+  notificationLabel.style.display = "none";
 }
 function resume(min, sec) {
   let runMin = min.innerText;
