@@ -9,7 +9,7 @@ var emailID;
 var Password;
 var existingData;
 
-fetch("http://localhost:8000/userdata.json")
+fetch("http://localhost:8000/users.json")
   .then((response) => response.json())
   .then((json) => (existingData = json));
 
@@ -36,8 +36,10 @@ else{
     signinButton.removeAttribute("disabled");
   }
 });
-
 function login_(){
+  fetch(
+    `http://localhost:8000/login?username=${emailID}`
+  );
   location.replace("http://localhost:8000/main.html")
 }
 

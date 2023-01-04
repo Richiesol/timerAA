@@ -2,6 +2,37 @@ const new_task_button = document.getElementById("popup-trigger");
 const form = document.getElementById("myForm");
 const form2 = document.getElementById("myForm2");
 const form3 = document.getElementById("myForm3");
+var username;
+var userData = {};
+
+async function getdata() {
+  let user = await fetch("http://localhost:8000/getusername");
+  if (user.ok) {
+    username = await user.text();
+  }
+}
+(async () => {
+  await getdata();
+  userData[username] = {};
+  await fetchDataFromJson();
+})();
+
+async function fetchDataFromJson(){
+  let response = await fetch(`http://localhost:8000/getuserdata?username=${username}`)
+   let json = await response.json();
+   userData[username] = json;
+   updateDataToLog();
+    } 
+
+async function saveData() {
+  let response = await fetch("http://localhost:8000/datasave", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(userData),
+  });
+}
 
 new_task_button.addEventListener("click", () => {
   openForm();
@@ -16,7 +47,7 @@ function openForm2() {
 }
 function openForm3(event) {
   let target = event.target;
-  let outerDiv = target.closest('.log_entry');
+  let outerDiv = target.closest(".log_entry");
   outerDiv.nextElementSibling.style.display = "block";
   outerDiv.nextElementSibling.classList.add("show");
 }
@@ -30,21 +61,26 @@ function closeForm2() {
 }
 function closeForm3(event) {
   let target = event.target;
-  let outerDiv = target.closest('.edit_popup');
+  let outerDiv = target.closest(".edit_popup");
   outerDiv.style.display = "none";
   outerDiv.classList.remove("show");
 }
-function deletelog(event){
+function deletelog(event) {
   let target = event.target;
-  let outerDiv = target.closest('.log'); 
-  if(logger.childElementCount == 1){
+  let outerDiv = target.closest(".log");
+  if (logger.childElementCount == 1) {
     historyPanel.style.display = "none";
     count = 0;
-    closeForm3(event)
+    closeForm3(event);
+    updateTotal();
+  } else {
+    outerDiv.remove();
+    updateTotal();
   }
-  else{
-    outerDiv.remove()
-  }
+ delete userData[username][outerDiv.id]
+ saveData();
+ console.log(userData);
+  
 }
 const taskName = document.getElementById("taskname");
 const tagName = document.getElementById("tagname");
@@ -55,8 +91,8 @@ const pause_button = document.getElementById("pause");
 const logTaskName = document.getElementById("taskname_entry");
 const historyPanel = document.getElementById("history");
 const logtab = document.getElementById("log1");
-const logger = document.getElementById("logger")
-const errormessage = document.getElementById("errormessage")
+const logger = document.getElementById("logger");
+const errormessage = document.getElementById("errormessage");
 
 let taskNameContent;
 let tagNameContent;
@@ -92,26 +128,25 @@ create_task_button.addEventListener("click", function () {
   }
 });
 
-
-function resumebutton(event){
+function resumebutton(event) {
   let target = event.target;
-  let outerDiv = target.closest('.time_play');
-  let timerDiv = outerDiv.lastElementChild.previousElementSibling
+  let outerDiv = target.closest(".time_play");
+  let timerDiv = outerDiv.lastElementChild.previousElementSibling;
   let logMin = timerDiv.firstElementChild;
   let logSec = timerDiv.lastElementChild;
   resume(logMin, logSec);
   outerDiv.firstElementChild.style.display = "none";
   outerDiv.firstElementChild.nextElementSibling.style.display = "block";
-};
+}
 function stopResumeButton(event) {
   let target = event.target;
-  let outerDiv = target.closest('.time_play');
+  let outerDiv = target.closest(".time_play");
   clearInterval(timer_interval);
   outerDiv.firstElementChild.style.display = "block";
   outerDiv.firstElementChild.nextElementSibling.style.display = "none";
   totalSeconds = 0;
   updateTotal();
-};
+}
 duration.addEventListener("input", function () {
   let current_time = currentTime();
   let difference =
@@ -136,7 +171,7 @@ play_button.addEventListener("click", function () {
   play_button.style.display = "none";
   pause_button.style.display = "block";
 });
-pause_button.addEventListener("click", function () { 
+pause_button.addEventListener("click", function () {
   count++;
   let totalDuration = minutesLabel.innerHTML + secondsLabel.innerHTML;
   save_data(taskNameContent, tagNameContent, totalDuration);
@@ -144,29 +179,55 @@ pause_button.addEventListener("click", function () {
   pause_button.style.display = "none";
   play_button.style.display = "block";
   reset();
-  if ((count == 1)) {
+  if (count == 1) {
     showHistory();
   }
-  if(count > 1){
-    addLogTab();
+  if (count > 1) {
+    addLogTab(`log${count}`);
   }
   addDataToLog();
 });
 
-function addLogTab() {
-
-    let clonedLogTab = logtab.cloneNode(true);
-    clonedLogTab.id = `log${count}`;
-    logger.appendChild(clonedLogTab);
-  }
-function addDataToLog(){
-  logger.lastElementChild.firstElementChild.firstElementChild.firstElementChild.innerText = data[count]["taskName"];
-  logger.lastElementChild.firstElementChild.firstElementChild.lastElementChild.innerText = data[count]["tag"];
-  logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild.previousElementSibling.firstElementChild.innerText = data[count]["duration"].slice(0, 2);
-  logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild.previousElementSibling.lastElementChild.innerText = data[count]["duration"].slice(-2);
-  updateTotal();
+function addLogTab(id) {
+  let clonedLogTab = logtab.cloneNode(true);
+  clonedLogTab.id = id;
+  logger.appendChild(clonedLogTab);
 }
-function updatemin(){
+function addDataToLog() {
+  let taskNameValue = data[count]["taskName"];
+  let tagNameValue =  data[count]["tag"];
+  let durationMinValue = data[count]["duration"].slice(0, 2);
+  let durationSecValue = data[count]["duration"].slice(-2);
+  updateElements(taskNameValue,tagNameValue,durationMinValue,durationSecValue);
+  userData[username][`log${count}`]= [taskNameValue,tagNameValue,durationMinValue,durationSecValue]
+  updateTotal();
+  saveData();
+}
+function updateElements(taskNameValue,tagNameValue,durationMinValue,durationSecValue){
+  let taskNameElement =
+    logger.lastElementChild.firstElementChild.firstElementChild
+      .firstElementChild;
+
+  taskNameElement.innerText = taskNameValue;
+  let tagNameElement =
+    logger.lastElementChild.firstElementChild.firstElementChild
+      .lastElementChild;
+
+  tagNameElement.innerText =tagNameValue;
+
+  let durationMin =
+    logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild
+      .previousElementSibling.firstElementChild;
+
+  durationMin.innerText = durationMinValue;
+
+  let durationSec =
+    logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild
+      .previousElementSibling.lastElementChild;
+
+  durationSec.innerText = durationSecValue;
+}
+function updatemin() {
   let min = document.querySelectorAll(".logmin");
   let sec = document.querySelectorAll(".logsec");
   let totalMin = 0;
@@ -174,22 +235,26 @@ function updatemin(){
   updateTotal();
 }
 
-function updateTotal(){
+function updateTotal() {
   let min = document.querySelectorAll(".logmin");
   let sec = document.querySelectorAll(".logsec");
   let totalMin = 0;
   let totalSec = 0;
-  for(let iter=0;iter< min.length;iter++){
+  for (let iter = 0; iter < min.length; iter++) {
     totalMin += parseInt(min[iter].innerText);
   }
-  for(let iter=0;iter< sec.length;iter++){
+  for (let iter = 0; iter < sec.length; iter++) {
     totalSec += parseInt(sec[iter].innerText);
   }
-  document.getElementById('totalminutes').innerText= document.getElementById('todayminutes').innerText=pad(parseInt(totalSec/60) + totalMin);
-  document.getElementById('totalseconds').innerText= document.getElementById('todayseconds').innerText=pad(totalSec%60);
+  document.getElementById("totalminutes").innerText = document.getElementById(
+    "todayminutes"
+  ).innerText = pad(parseInt(totalSec / 60) + totalMin);
+  document.getElementById("totalseconds").innerText = document.getElementById(
+    "todayseconds"
+  ).innerText = pad(totalSec % 60);
 }
 function save_data(taskname, tagname, duration) {
-  if (taskname == undefined || taskname == "null"){
+  if (taskname == undefined || taskname == "null") {
     taskname = "N/A";
   }
   if (tagname == undefined) {
@@ -218,10 +283,10 @@ function currentTime() {
 }
 function error_message(str) {
   clearInterval(timeExceed);
-errormessage.innerText = str
+  errormessage.innerText = str;
   notificationLabel.style.display = "flex";
 }
-function closenotification(){
+function closenotification() {
   notificationLabel.style.display = "none";
 }
 function resume(min, sec) {
@@ -258,4 +323,17 @@ function pad(val) {
   } else {
     return valString;
   }
+}
+
+function updateDataToLog(){
+  let data = Object.keys(userData[username])
+  if(data.length >= 1){
+    showHistory();
+    updateElements(userData[username]["log1"][0],userData[username]["log1"][1],userData[username]["log1"][2],userData[username]["log1"][3]);
+    for(let iter=1;iter<data.length;iter++){
+      addLogTab(data[iter]);
+      updateElements(userData[username][`${data[iter]}`][0],userData[username][`${data[iter]}`][1],userData[username][`${data[iter]}`][2],userData[username][`${data[iter]}`][3]);
+    }
+  }
+  count =data[data.length-1].replace(/\D/g, '');
 }

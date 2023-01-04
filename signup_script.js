@@ -11,7 +11,7 @@ var Password;
 var workSpace;
 var existingData;
 
-fetch('http://localhost:8000/userdata.json')
+fetch('http://localhost:8000/users.json')
     .then((response) => response.json())
     .then((json) => existingData = json);
 
@@ -41,19 +41,21 @@ function submit_(event) {
   userData = {
     nickname: nickName,
     workspace: workSpace,
-    email: emailID,
+    email: emailId.value,
     password: Password,
   };
-  connectServer();
+  console.log(emailID);
+  connectServer(userData);
 }
 
-async function connectServer() {
+async function connectServer(userData) {
+  console.log(userData)
   let response = await fetch("http://localhost:8000/datasend", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(userData), 
   });
     userData = await response.json();
 }
