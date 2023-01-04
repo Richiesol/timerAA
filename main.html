@@ -37,28 +37,26 @@
       <div class="profile">
         <img src="Resource/Group 1profile.png" alt="asdf" class="profile_pic" />
         <div class="profilename">
-          <label for="name" class="name">Richie Soshan</label>
-          <label for="email id">richie@gmail.com</label>
+          <label for="name" class="name" id="name">Richie Soshan</label>
+          <label for="email id" id="emailId">richie@gmail.com</label>
         </div>
       </div>
     </div>
     <div class="notification" id="notification">
-      <label for="errormessage" class="errormessage" id="errormessage">
-
-      </label>
+      <label for="errormessage" class="errormessage" id="errormessage"> </label>
       <span class="closemodal" onclick="closenotification()">&times;</span>
     </div>
     <div class="mid_section">
       <div class="timer_panel">
         <div class="taskpanel">
           <div class="task_name">
-            <button for="create" class="create" id="popup-trigger" >
+            <button for="create" class="create" id="popup-trigger">
               + &nbsp; &nbsp; Start new task
             </button>
 
             <div class="popup" id="myForm">
               <div class="blocker" onclick="closeForm()"></div>
-              <form class="form-container" >
+              <form class="form-container">
                 <input
                   type="text"
                   placeholder="Enter Task Name"
@@ -67,7 +65,6 @@
                   id="taskname"
                   value=""
                   required
-                
                 />
                 <input
                   type="text"
@@ -77,7 +74,12 @@
                   id="tagname"
                   value=""
                 />
-                <button type="button" class="btn" id="create_task" onclick="closeForm()">
+                <button
+                  type="button"
+                  class="btn"
+                  id="create_task"
+                  onclick="closeForm()"
+                >
                   Create Task
                 </button>
               </form>
@@ -91,9 +93,10 @@
             id="popup-trigger2"
             onclick="openForm2()"
           >
-            <img src="Resource/Vectorclock.png" alt="na" class="clock" /> &nbsp;Schedule
+            <img src="Resource/Vectorclock.png" alt="na" class="clock" />
+            &nbsp;Schedule
           </button>
-          <div class="schedule_popup" id="myForm2" >
+          <div class="schedule_popup" id="myForm2">
             <div class="blocker" onclick="closeForm2()"></div>
             <form class="form-container">
               <label for="till">End time</label>
@@ -109,13 +112,18 @@
           </div>
         </div>
         <img src="Resource/Arrow 2arrow.png" alt="arrow" class="arrow" />
-        <div for="timer" class="timer" >
-          <label  id="minutes" contenteditable="true">00</label>:
-          <label  id="seconds" contenteditable="true">00</label>
+        <div for="timer" class="timer">
+          <label id="minutes" contenteditable="true">00</label>:
+          <label id="seconds" contenteditable="true">00</label>
         </div>
 
-        <img src="Resource/Vector.png" alt="" class="play" id="play"/>
-        <img src="Resource/circle-stop-solid (1) 1stop_button.png" alt="" class="pause" id="pause"/>
+        <img src="Resource/Vector.png" alt="" class="play" id="play" />
+        <img
+          src="Resource/circle-stop-solid (1) 1stop_button.png"
+          alt=""
+          class="pause"
+          id="pause"
+        />
       </div>
     </div>
     <div class="historyPanel" id="history">
@@ -126,58 +134,85 @@
       </div>
       <div class="total_time_container">
         <label for="time_total" class="total_time_text">Total time:</label>
-        <div for="timer" class="total_time" >
-          <label  id="totalminutes" >00</label>:
-          <label  id="totalseconds" >00</label>
+        <div for="timer" class="total_time">
+          <label id="totalminutes">00</label>:
+          <label id="totalseconds">00</label>
         </div>
       </div>
       <div class="timelog">
         <div class="timelog_panel" id="timelog_panel">
           <div class="menubar">
             <label for="date" class="day">Today</label>
-            <div for="timer" class="daily_time" >
-              <label  id="todayminutes" >00</label>:
-              <label  id="todayseconds" >00</label>
+            <div for="timer" class="daily_time">
+              <label id="todayminutes">00</label>:
+              <label id="todayseconds">00</label>
             </div>
           </div>
           <div class="logger" id="logger">
             <div class="log" id="log1">
               <div class="log_entry">
                 <div class="tasktag">
-                  <label for="date" class="taskname_entry" id="taskname_entry1" contenteditable="true"
+                  <label
+                    for="date"
+                    class="taskname_entry"
+                    id="taskname_entry1"
+                    contenteditable="true"
                     >Task name</label
-                  > 
-                  <label for="date" class="taskname_entry" id="taskname_entry1" contenteditable="true"
+                  >
+                  <label
+                    for="date"
+                    class="taskname_entry"
+                    id="taskname_entry1"
+                    contenteditable="true"
                     >|</label
-                  > 
-                  <label for="date" class="taskname_entry" id="tagname" contenteditable="true"
+                  >
+                  <label
+                    for="date"
+                    class="taskname_entry"
+                    id="tagname"
+                    contenteditable="true"
                     >Task name</label
-                  > 
+                  >
                 </div>
                 <div class="time_play">
-                  <img src="Resource/Vector.png" alt="" class="resume" id="resume" onclick="resumebutton(event)"/>
-                  <img src="Resource/circle-stop-solid (1) 1stop_button.png" alt="" class="pauseLog" id="pauseresume" onclick="stopResumeButton(event)"/>
-                  <div for="timer" class="duration" >
-                    <label  class="logmin" id="logminutes">00</label>:
-                    <label  class="logsec" id="logseconds" >00</label>
+                  <img
+                    src="Resource/Vector.png"
+                    alt=""
+                    class="resume"
+                    id="resume"
+                    onclick="resumebutton(event)"
+                  />
+                  <img
+                    src="Resource/circle-stop-solid (1) 1stop_button.png"
+                    alt=""
+                    class="pauseLog"
+                    id="pauseresume"
+                    onclick="stopResumeButton(event)"
+                  />
+                  <div for="timer" class="duration">
+                    <label class="logmin" id="logminutes">00</label>:
+                    <label class="logsec" id="logseconds">00</label>
                   </div>
-                  <button class="menu" onclick="openForm3(event)">:</button> 
+                  <button class="menu" onclick="openForm3(event)">:</button>
                 </div>
               </div>
               <div class="edit_popup" id="myForm3">
-                  <div class="blocker" onclick="closeForm3(event)"></div>
-                  <form class="form-container">
-                    <button type="button" class="delete" onclick="deletelog(event)">
-                      delete
-                    </button>
-                  </form>
-                </div>
+                <div class="blocker" onclick="closeForm3(event)"></div>
+                <form class="form-container">
+                  <button
+                    type="button"
+                    class="delete"
+                    onclick="deletelog(event)"
+                  >
+                    delete
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="script.js">  
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>

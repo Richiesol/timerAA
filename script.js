@@ -2,13 +2,18 @@ const new_task_button = document.getElementById("popup-trigger");
 const form = document.getElementById("myForm");
 const form2 = document.getElementById("myForm2");
 const form3 = document.getElementById("myForm3");
+const name = document.getElementById("name");
+const emailAccount = document.getElementById("emailId");
+
 var username;
 var userData = {};
 
 async function getdata() {
   let user = await fetch("http://localhost:8000/getusername");
   if (user.ok) {
-    username = await user.text();
+    let userdetails = await user.json();
+    emailAccount.innerText = username = userdetails["username"];
+    name.innerText = userdetails["nickname"];
   }
 }
 (async () => {
@@ -17,12 +22,16 @@ async function getdata() {
   await fetchDataFromJson();
 })();
 
-async function fetchDataFromJson(){
-  let response = await fetch(`http://localhost:8000/getuserdata?username=${username}`)
-   let json = await response.json();
-   userData[username] = json;
-   updateDataToLog();
-    } 
+async function fetchDataFromJson() {
+  let response = await fetch(
+    `http://localhost:8000/getuserdata?username=${username}`
+  );
+  if (response.status !== 100) {
+    let json = await response.json();
+    userData[username] = json;
+    updateDataToLog();
+  }
+}
 
 async function saveData() {
   let response = await fetch("http://localhost:8000/datasave", {
@@ -77,10 +86,9 @@ function deletelog(event) {
     outerDiv.remove();
     updateTotal();
   }
- delete userData[username][outerDiv.id]
- saveData();
- console.log(userData);
-  
+  delete userData[username][outerDiv.id];
+  saveData();
+  console.log(userData);
 }
 const taskName = document.getElementById("taskname");
 const tagName = document.getElementById("tagname");
@@ -195,15 +203,30 @@ function addLogTab(id) {
 }
 function addDataToLog() {
   let taskNameValue = data[count]["taskName"];
-  let tagNameValue =  data[count]["tag"];
+  let tagNameValue = data[count]["tag"];
   let durationMinValue = data[count]["duration"].slice(0, 2);
   let durationSecValue = data[count]["duration"].slice(-2);
-  updateElements(taskNameValue,tagNameValue,durationMinValue,durationSecValue);
-  userData[username][`log${count}`]= [taskNameValue,tagNameValue,durationMinValue,durationSecValue]
+  updateElements(
+    taskNameValue,
+    tagNameValue,
+    durationMinValue,
+    durationSecValue
+  );
+  userData[username][`log${count}`] = [
+    taskNameValue,
+    tagNameValue,
+    durationMinValue,
+    durationSecValue,
+  ];
   updateTotal();
   saveData();
 }
-function updateElements(taskNameValue,tagNameValue,durationMinValue,durationSecValue){
+function updateElements(
+  taskNameValue,
+  tagNameValue,
+  durationMinValue,
+  durationSecValue
+) {
   let taskNameElement =
     logger.lastElementChild.firstElementChild.firstElementChild
       .firstElementChild;
@@ -213,7 +236,7 @@ function updateElements(taskNameValue,tagNameValue,durationMinValue,durationSecV
     logger.lastElementChild.firstElementChild.firstElementChild
       .lastElementChild;
 
-  tagNameElement.innerText =tagNameValue;
+  tagNameElement.innerText = tagNameValue;
 
   let durationMin =
     logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild
@@ -325,15 +348,25 @@ function pad(val) {
   }
 }
 
-function updateDataToLog(){
-  let data = Object.keys(userData[username])
-  if(data.length >= 1){
+function updateDataToLog() {
+  let data = Object.keys(userData[username]);
+  if (data.length >= 1) {
     showHistory();
-    updateElements(userData[username]["log1"][0],userData[username]["log1"][1],userData[username]["log1"][2],userData[username]["log1"][3]);
-    for(let iter=1;iter<data.length;iter++){
+    updateElements(
+      userData[username]["log1"][0],
+      userData[username]["log1"][1],
+      userData[username]["log1"][2],
+      userData[username]["log1"][3]
+    );
+    for (let iter = 1; iter < data.length; iter++) {
       addLogTab(data[iter]);
-      updateElements(userData[username][`${data[iter]}`][0],userData[username][`${data[iter]}`][1],userData[username][`${data[iter]}`][2],userData[username][`${data[iter]}`][3]);
+      updateElements(
+        userData[username][`${data[iter]}`][0],
+        userData[username][`${data[iter]}`][1],
+        userData[username][`${data[iter]}`][2],
+        userData[username][`${data[iter]}`][3]
+      );
     }
   }
-  count =data[data.length-1].replace(/\D/g, '');
+  count = data[data.length - 1].replace(/\D/g, "");
 }
