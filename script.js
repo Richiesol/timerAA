@@ -9,88 +9,7 @@ var username;
 var userData = {};
 let totalDuration;
 
-async function getdata() {
-  let user = await fetch("http://localhost:8000/getusername");
-  if (user.ok) {
-    let userdetails = await user.json();
-    emailAccount.innerText = username = userdetails["username"];
-    name.innerText = userdetails["nickname"];
-  }
-}
-(async () => {
-  await getdata();
-  userData[username] = {};
-  await fetchDataFromJson();
-})();
 
-async function fetchDataFromJson() {
-  let response = await fetch(
-    `http://localhost:8000/getuserdata?username=${username}`
-  );
-  if (response.status !== 100) {
-    let json = await response.json();
-    userData[username] = json;
-    updateDataToLog();
-  }
-}
-
-async function saveData() {
-  let response = await fetch("http://localhost:8000/datasave", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify(userData),
-  });
-}
-
-new_task_button.addEventListener("click", () => {
-  openForm();
-});
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-  form.classList.add("show");
-}
-function openForm2() {
-  document.getElementById("myForm2").style.display = "block";
-  form2.classList.add("show");
-}
-function openForm3(event) {
-  let target = event.target;
-  let outerDiv = target.closest(".log_entry");
-  outerDiv.nextElementSibling.style.display = "block";
-  outerDiv.nextElementSibling.classList.add("show");
-}
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-  form.classList.remove("show");
-}
-function closeForm2() {
-  document.getElementById("myForm2").style.display = "none";
-  form2.classList.remove("show");
-}
-function closeForm3() {
-  form3.style.display = "none";
-}
-function deletelog(event) {
-  let response = confirm("Are you sure you want to delete the log ?");
-  if (response) {
-    let target = event.target;
-    let outerDiv = target.closest(".log");
-    if (logger.childElementCount == 1) {
-      historyPanel.style.display = "none";
-      count = 0;
-      closeForm3(event);
-      updateTotal();
-    } else {
-      outerDiv.remove();
-      updateTotal();
-    }
-    delete userData[username][outerDiv.id];
-    saveData();
-    console.log(userData);
-  }
-}
 const taskName = document.getElementById("taskname");
 const tagName = document.getElementById("tagname");
 const create_task_button = document.getElementById("create_task");
@@ -118,7 +37,6 @@ let differenceInMin;
 let totalMin;
 let data = {};
 var globalPlayPauseElement = null;
-
 let timeExceed = setInterval(() => {
   if (parseInt(totalSeconds / 60) == totalMin) {
     error_message("Time Exceeded");
@@ -138,40 +56,6 @@ create_task_button.addEventListener("click", function () {
     taskNameContent = "null";
   }
 });
-
-function resumebutton(event) {
-  if (globalPlayPauseElement != null) {
-    totalSeconds = 0;
-    clearInterval(timer_interval);
-    if (secondsLabel.innerHTML != "00" || minutesLabel.innerHTML != "00") {
-      globalPlayPauseElement.style.display = "none";
-      pauseButton.style.display = "block";
-    } else {
-      globalPlayPauseElement.style.display = "none";
-      globalPlayPauseElement.previousElementSibling.style.display = "block";
-    }
-  }
-  let target = event.target;
-  let outerDiv = target.closest(".time_play");
-  let timerDiv = outerDiv.lastElementChild.previousElementSibling;
-  let logMin = timerDiv.firstElementChild;
-  let logSec = timerDiv.lastElementChild;
-  outerDiv.firstElementChild.style.display = "none";
-  outerDiv.firstElementChild.nextElementSibling.style.display = "block";
-  let tempelement = outerDiv.firstElementChild;
-  globalPlayPauseElement = tempelement.nextElementSibling;
-  resume(logMin, logSec);
-}
-function stopResumeButton(event) {
-  globalPlayPauseElement = null;
-  let target = event.target;
-  let outerDiv = target.closest(".time_play");
-  clearInterval(timer_interval);
-  outerDiv.firstElementChild.style.display = "block";
-  outerDiv.firstElementChild.nextElementSibling.style.display = "none";
-  totalSeconds = 0;
-  updateTotal();
-}
 duration.addEventListener("input", function () {
   let current_time = currentTime();
   let difference =
@@ -231,7 +115,121 @@ pauseButton.addEventListener("click", function () {
   pauseButton.style.display = "none";
   pause_button.style.display = "block";
 });
+new_task_button.addEventListener("click", () => {
+  openForm();
+});
+async function getdata() {
+  let user = await fetch("http://localhost:8000/getusername");
+  if (user.ok) {
+    let userdetails = await user.json();
+    emailAccount.innerText = username = userdetails["username"];
+    name.innerText = userdetails["nickname"];
+  }
+}
+(async () => {
+  await getdata();
+  userData[username] = {};
+  await fetchDataFromJson();
+})();
 
+async function fetchDataFromJson() {
+  let response = await fetch(
+    `http://localhost:8000/getuserdata?username=${username}`
+  );
+  if (response.status !== 100) {
+    let json = await response.json();
+    userData[username] = json;
+    updateDataToLog();
+  }
+}
+
+async function saveData() {
+  let response = await fetch("http://localhost:8000/datasave", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(userData),
+  });
+}
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+  form.classList.add("show");
+}
+function openForm2() {
+  document.getElementById("myForm2").style.display = "block";
+  form2.classList.add("show");
+}
+function openForm3(event) {
+  let target = event.target;
+  let outerDiv = target.closest(".log_entry");
+  outerDiv.nextElementSibling.style.display = "block";
+  outerDiv.nextElementSibling.classList.add("show");
+}
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+  form.classList.remove("show");
+}
+function closeForm2() {
+  document.getElementById("myForm2").style.display = "none";
+  form2.classList.remove("show");
+}
+function closeForm3() {
+  form3.style.display = "none";
+}
+function deletelog(event) {
+  let response = confirm("Are you sure you want to delete the log ?");
+  if (response) {
+    let target = event.target;
+    let outerDiv = target.closest(".log");
+    if (logger.childElementCount == 1) {
+      historyPanel.style.display = "none";
+      count = 0;
+      closeForm3(event);
+      updateTotal();
+    } else {
+      outerDiv.remove();
+      updateTotal();
+    }
+    delete userData[username][outerDiv.id];
+    saveData();
+    console.log(userData);
+  }
+}
+function resumebutton(event) {
+  if (globalPlayPauseElement != null) {
+    totalSeconds = 0;
+    clearInterval(timer_interval);
+    if (secondsLabel.innerHTML != "00" || minutesLabel.innerHTML != "00") {
+      globalPlayPauseElement.style.display = "none";
+      pauseButton.style.display = "block";
+    } else {
+      globalPlayPauseElement.style.display = "none";
+      globalPlayPauseElement.previousElementSibling.style.display = "block";
+    }
+  }
+  let target = event.target;
+  let outerDiv = target.closest(".time_play");
+  let timerDiv = outerDiv.lastElementChild.previousElementSibling;
+  let logMin = timerDiv.firstElementChild;
+  let logSec = timerDiv.lastElementChild;
+  outerDiv.firstElementChild.style.display = "none";
+  outerDiv.firstElementChild.nextElementSibling.style.display = "block";
+  let tempelement = outerDiv.firstElementChild;
+  globalPlayPauseElement = tempelement.nextElementSibling;
+  resume(logMin, logSec);
+}
+function stopResumeButton(event) {
+  globalPlayPauseElement = null;
+  let target = event.target;
+  let outerDiv = target.closest(".time_play");
+  clearInterval(timer_interval);
+  outerDiv.firstElementChild.style.display = "block";
+  outerDiv.firstElementChild.nextElementSibling.style.display = "none";
+  totalSeconds = 0;
+  updateTotal();
+}
 function addLogTab(id) {
   let clonedLogTab = logtab.cloneNode(true);
   clonedLogTab.id = id;
@@ -293,7 +291,6 @@ function updatemin() {
   let totalSec = 0;
   updateTotal();
 }
-
 function updateTotal() {
   let min = document.querySelectorAll(".logmin");
   let sec = document.querySelectorAll(".logsec");
@@ -383,7 +380,6 @@ function pad(val) {
     return valString;
   }
 }
-
 function updateDataToLog() {
   let data = Object.keys(userData[username]);
   if (data.length >= 1) {
@@ -406,7 +402,6 @@ function updateDataToLog() {
   }
   count = data[data.length - 1].replace(/\D/g, "");
 }
-
 function logout() {
   location.replace("http://localhost:8000/index.html");
 }
