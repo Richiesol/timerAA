@@ -7,6 +7,7 @@ const emailAccount = document.getElementById("emailId");
 
 var username;
 var userData = {};
+let totalDuration;
 
 async function getdata() {
   let user = await fetch("http://localhost:8000/getusername");
@@ -68,34 +69,35 @@ function closeForm2() {
   document.getElementById("myForm2").style.display = "none";
   form2.classList.remove("show");
 }
-function closeForm3(event) {
-  let target = event.target;
-  let outerDiv = target.closest(".edit_popup");
-  outerDiv.style.display = "none";
-  outerDiv.classList.remove("show");
+function closeForm3() {
+  form3.style.display = "none";
 }
 function deletelog(event) {
-  let target = event.target;
-  let outerDiv = target.closest(".log");
-  if (logger.childElementCount == 1) {
-    historyPanel.style.display = "none";
-    count = 0;
-    closeForm3(event);
-    updateTotal();
-  } else {
-    outerDiv.remove();
-    updateTotal();
+  let response = confirm("Are you sure you want to delete the log ?");
+  if (response) {
+    let target = event.target;
+    let outerDiv = target.closest(".log");
+    if (logger.childElementCount == 1) {
+      historyPanel.style.display = "none";
+      count = 0;
+      closeForm3(event);
+      updateTotal();
+    } else {
+      outerDiv.remove();
+      updateTotal();
+    }
+    delete userData[username][outerDiv.id];
+    saveData();
+    console.log(userData);
   }
-  delete userData[username][outerDiv.id];
-  saveData();
-  console.log(userData);
 }
 const taskName = document.getElementById("taskname");
 const tagName = document.getElementById("tagname");
 const create_task_button = document.getElementById("create_task");
 const duration = document.getElementById("duration");
 const play_button = document.getElementById("play");
-const pause_button = document.getElementById("pause");
+const pause_button = document.getElementById("stop");
+const pauseButton = document.getElementById("pause");
 const logTaskName = document.getElementById("taskname_entry");
 const historyPanel = document.getElementById("history");
 const logtab = document.getElementById("log1");
@@ -115,6 +117,7 @@ let notificationLabel = document.getElementById("notification");
 let differenceInMin;
 let totalMin;
 let data = {};
+var globalPlayPauseElement = null;
 
 let timeExceed = setInterval(() => {
   if (parseInt(totalSeconds / 60) == totalMin) {
@@ -137,16 +140,30 @@ create_task_button.addEventListener("click", function () {
 });
 
 function resumebutton(event) {
+  if (globalPlayPauseElement != null) {
+    totalSeconds = 0;
+    clearInterval(timer_interval);
+    if (secondsLabel.innerHTML != "00" || minutesLabel.innerHTML != "00") {
+      globalPlayPauseElement.style.display = "none";
+      pauseButton.style.display = "block";
+    } else {
+      globalPlayPauseElement.style.display = "none";
+      globalPlayPauseElement.previousElementSibling.style.display = "block";
+    }
+  }
   let target = event.target;
   let outerDiv = target.closest(".time_play");
   let timerDiv = outerDiv.lastElementChild.previousElementSibling;
   let logMin = timerDiv.firstElementChild;
   let logSec = timerDiv.lastElementChild;
-  resume(logMin, logSec);
   outerDiv.firstElementChild.style.display = "none";
   outerDiv.firstElementChild.nextElementSibling.style.display = "block";
+  let tempelement = outerDiv.firstElementChild;
+  globalPlayPauseElement = tempelement.nextElementSibling;
+  resume(logMin, logSec);
 }
 function stopResumeButton(event) {
+  globalPlayPauseElement = null;
   let target = event.target;
   let outerDiv = target.closest(".time_play");
   clearInterval(timer_interval);
@@ -175,13 +192,22 @@ duration.addEventListener("input", function () {
   }
 });
 play_button.addEventListener("click", function () {
+  if (globalPlayPauseElement != null) {
+    globalPlayPauseElement.style.display = "none";
+    globalPlayPauseElement.previousElementSibling.style.display = "block";
+    clearInterval(timer_interval);
+    totalSeconds = 0;
+  }
   start_timer();
   play_button.style.display = "none";
   pause_button.style.display = "block";
+  globalPlayPauseElement = pause_button;
 });
 pause_button.addEventListener("click", function () {
+  globalPlayPauseElement = null;
+  clearInterval(timer_interval);
   count++;
-  let totalDuration = minutesLabel.innerHTML + secondsLabel.innerHTML;
+  totalDuration = minutesLabel.innerHTML + secondsLabel.innerHTML;
   save_data(taskNameContent, tagNameContent, totalDuration);
   stop_timer(minutesLabel, secondsLabel);
   pause_button.style.display = "none";
@@ -194,6 +220,16 @@ pause_button.addEventListener("click", function () {
     addLogTab(`log${count}`);
   }
   addDataToLog();
+});
+pauseButton.addEventListener("click", function () {
+  if (globalPlayPauseElement != null) {
+    globalPlayPauseElement.style.display = "none";
+    globalPlayPauseElement.previousElementSibling.style.display = "block";
+  }
+  clearInterval(timer_interval);
+  resume(minutesLabel, secondsLabel);
+  pauseButton.style.display = "none";
+  pause_button.style.display = "block";
 });
 
 function addLogTab(id) {
@@ -353,10 +389,10 @@ function updateDataToLog() {
   if (data.length >= 1) {
     showHistory();
     updateElements(
-      userData[username]["log1"][0],
-      userData[username]["log1"][1],
-      userData[username]["log1"][2],
-      userData[username]["log1"][3]
+      userData[username][data[0]][0],
+      userData[username][data[0]][1],
+      userData[username][data[0]][2],
+      userData[username][data[0]][3]
     );
     for (let iter = 1; iter < data.length; iter++) {
       addLogTab(data[iter]);
@@ -369,4 +405,11 @@ function updateDataToLog() {
     }
   }
   count = data[data.length - 1].replace(/\D/g, "");
+}
+
+function logout() {
+  location.replace("http://localhost:8000/index.html");
+}
+function showlogout() {
+  form3.style.display = "flex";
 }

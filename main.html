@@ -35,7 +35,7 @@
         <label for="brandname" class="brandname">Timeit</label>
       </div>
       <div class="profile">
-        <img src="Resource/Group 1profile.png" alt="asdf" class="profile_pic" />
+        <img src="Resource/Group 1profile.png" alt="asdf" class="profile_pic" onclick="showlogout()"/>
         <div class="profilename">
           <label for="name" class="name" id="name">Richie Soshan</label>
           <label for="email id" id="emailId">richie@gmail.com</label>
@@ -45,6 +45,18 @@
     <div class="notification" id="notification">
       <label for="errormessage" class="errormessage" id="errormessage"> </label>
       <span class="closemodal" onclick="closenotification()">&times;</span>
+    </div>
+    <div class="edit_popup" id="myForm3">
+      <div class="blocker" onclick="closeForm3()"></div>
+      <form class="form-container">
+        <button
+          type="button"
+          class="delete"
+          onclick="logout()"
+        >
+          LOGOUT
+        </button>
+      </form>
     </div>
     <div class="mid_section">
       <div class="timer_panel">
@@ -117,11 +129,22 @@
           <label id="seconds" contenteditable="true">00</label>
         </div>
 
-        <img src="Resource/Vector.png" alt="" class="play" id="play" />
         <img
-          src="Resource/circle-stop-solid (1) 1stop_button.png"
+          src="Resource/Group 1playbutton (1).svg"
           alt=""
-          class="pause"
+          class="play"
+          id="play"
+        />
+        <img
+          src="Resource/Group 1stopbutton.svg"
+          alt=""
+          class="stop"
+          id="stop"
+        />
+        <img
+          src="Resource/Group 1pause button.svg"
+          alt=""
+          class="stop"
           id="pause"
         />
       </div>
@@ -176,16 +199,16 @@
                 </div>
                 <div class="time_play">
                   <img
-                    src="Resource/Vector.png"
+                    src="Resource/Group 1playbutton (1).svg"
                     alt=""
                     class="resume"
                     id="resume"
                     onclick="resumebutton(event)"
                   />
                   <img
-                    src="Resource/circle-stop-solid (1) 1stop_button.png"
+                    src="Resource/Group 1stopbutton.svg"
                     alt=""
-                    class="pauseLog"
+                    class="pauseLog stop"
                     id="pauseresume"
                     onclick="stopResumeButton(event)"
                   />
@@ -193,20 +216,14 @@
                     <label class="logmin" id="logminutes">00</label>:
                     <label class="logsec" id="logseconds">00</label>
                   </div>
-                  <button class="menu" onclick="openForm3(event)">:</button>
-                </div>
-              </div>
-              <div class="edit_popup" id="myForm3">
-                <div class="blocker" onclick="closeForm3(event)"></div>
-                <form class="form-container">
-                  <button
-                    type="button"
-                    class="delete"
+                  <img
+                    src="Resource/trash-can-regular.svg"
+                    alt=""
+                    srcset=""
+                    class="menu"
                     onclick="deletelog(event)"
-                  >
-                    delete
-                  </button>
-                </form>
+                  />
+                </div>
               </div>
             </div>
           </div>

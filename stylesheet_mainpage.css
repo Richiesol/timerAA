@@ -140,7 +140,7 @@ body {
   padding-right: 2%;
   padding-left: 2%;
 }
-.pause{
+.stop{
   display:none;
   width: 5%;
   padding-right: 2%;
@@ -208,18 +208,33 @@ body {
 }
 .edit_popup {
   display: none;
-  border-radius: 7px;
-  justify-content: center;
-  width: 10%;
-  height:75%;
-  top: 75%;
-  right: 60%;
-  z-index: 10;
+    position: absolute;
+    border-radius: 7px;
+    justify-content: center;
+    width: 10%;
+    top: 10%;
+    right: 5%;
+    z-index: 10;
+}
+
+.asdf{
+  display: flex;
+    position: absolute;
+    border-radius: 7px;
+    justify-content: center;
+    width: 10%;
+    /* height: 75%; */
+    top: 10%;
+    right: 5%;
+    z-index: 10;
 }
 .delete {
   font-size: large;
   font-family: "Alegreya Sans";
   border: none;
+}
+.delete-button{
+  width:500px;
 }
 .blocker {
   position: fixed;
@@ -276,25 +291,48 @@ body {
 }
 .timelog {
   width: 100%;
-  height: 40%;
+  height: 60%;
   display: flex;
   justify-content: center;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #00000042; 
+  border-radius:10px;
+  display: none;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.589); 
+  border-radius:10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+ 
+}
 .timelog_panel {
-  display: flex;
   height: auto;
   width: 60%;
   justify-content: start;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x:clip;
 }
 .menubar {
   display: flex;
   position: sticky;
+  top: 0%;
   background-color: #fff;
-  width: 100%;
+  width: 99.5%;
   align-items: center;
-  height: 25%;
-  min-height: 25%;
+  height: 15%;
   border: 2px solid rgba(0, 0, 0, 0.19);
   border-bottom: 0;
   border-radius: 7px 7px 0 0;
@@ -316,18 +354,21 @@ body {
 }
 .log{
   display: flex;
-  width:125%;
 }
 .log_entry {
   display: flex;
   background-color: #fff;
-  width: 80%;
+  width: 100%;
   align-items: center;
   height: 100%;
   border: 2px solid rgba(155, 155, 155, 0.466);
   border-radius: 0 0 0 0;
   justify-content: space-between;
 }
+/* .delete-button{
+  align-self: center; 
+  height:100%;
+} */
 .taskname_entry {
   padding-left: 2%;
   text-align: center;
@@ -369,14 +410,9 @@ body {
 .menu {
   display: flex;
   height: 100%;
-  width: 20%;
-  padding-top: 3%;
-  font-weight: 900;
-  font-size: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: rgba(0, 0, 0, 0.315);
-  border: none;
-  background-color: #fff;
+  padding: 5% 5% 5% 0%;
+  width: 15%;
+  align-self: center;
 }
 label:focus {
   outline: none;
@@ -413,3 +449,4 @@ label:focus {
   display: flex;
   height:100%;
 }
+
