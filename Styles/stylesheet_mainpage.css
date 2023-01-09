@@ -54,7 +54,9 @@ body {
   border-radius: 7px;
   
 }
-
+img,button{
+  cursor: pointer;
+}
 .mid_section {
   display: flex;
   justify-content: center;

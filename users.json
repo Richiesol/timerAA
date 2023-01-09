@@ -1,1 +1,44 @@
-{"asdf@adsf.com":{"nickname":"asdfdaf","workspace":"adsfasdf","email":"asdf@adsf.com","password":"asdfg"},"adsf@asdf.com":{"nickname":"asdfg","workspace":"aaaaa","email":"adsf@asdf.com","password":"asdfg"},"mani@okicici.com":{"nickname":"manisha","workspace":"soliton","email":"mani@okicici.com","password":"asdfg"},"richie@test.com":{"nickname":"Richie soshan","workspace":"Soliton","email":"richie@test.com","password":"test"},"test@test.com":{"nickname":"Test Profile","workspace":"Soliton","email":"test@test.com","password":"helloworld"},"testrun@sol.com":{"nickname":"Test run","workspace":"Soliton","email":"testrun@sol.com","password":"testrun"}}
+{
+  "asdf@adsf.com": {
+    "nickname": "asdfdaf",
+    "workspace": "adsfasdf",
+    "email": "asdf@adsf.com",
+    "password": "asdfg"
+  },
+  "adsf@asdf.com": {
+    "nickname": "asdfg",
+    "workspace": "aaaaa",
+    "email": "adsf@asdf.com",
+    "password": "asdfg"
+  },
+  "mani@okicici.com": {
+    "nickname": "manisha",
+    "workspace": "soliton",
+    "email": "mani@okicici.com",
+    "password": "asdfg"
+  },
+  "richie@test.com": {
+    "nickname": "Richie soshan",
+    "workspace": "Soliton",
+    "email": "richie@test.com",
+    "password": "test"
+  },
+  "test@test.com": {
+    "nickname": "Test Profile",
+    "workspace": "Soliton",
+    "email": "test@test.com",
+    "password": "helloworld"
+  },
+  "testrun@sol.com": {
+    "nickname": "Test run",
+    "workspace": "Soliton",
+    "email": "testrun@sol.com",
+    "password": "testrun"
+  },
+  "richie.soshan@solitontech.com": {
+    "nickname": "Richie Soshan",
+    "workspace": "Soliton",
+    "email": "richie.soshan@solitontech.com",
+    "password": "Rs@12345"
+  }
+}

@@ -5,10 +5,9 @@ const form3 = document.getElementById("myForm3");
 const name = document.getElementById("name");
 const emailAccount = document.getElementById("emailId");
 
-var username;
-var userData = {};
+let username;
+let userData = {};
 let totalDuration;
-
 
 const taskName = document.getElementById("taskname");
 const tagName = document.getElementById("tagname");
@@ -25,18 +24,20 @@ const errormessage = document.getElementById("errormessage");
 
 let taskNameContent;
 let tagNameContent;
-var count = 0;
+let count = 0;
 let timer_interval;
-var minutesLabel = document.getElementById("minutes");
-var secondsLabel = document.getElementById("seconds");
-var logMinutesLabel = document.getElementById("logminutes");
-var logSecondsLabel = document.getElementById("logseconds");
-var totalSeconds = 0;
+let minutesLabel = document.getElementById("minutes");
+let secondsLabel = document.getElementById("seconds");
+let logMinutesLabel = document.getElementById("logminutes");
+let logSecondsLabel = document.getElementById("logseconds");
+let totalSeconds = 0;
 let notificationLabel = document.getElementById("notification");
 let differenceInMin;
 let totalMin;
 let data = {};
-var globalPlayPauseElement = null;
+let globalPlayPauseElement = null;
+
+
 let timeExceed = setInterval(() => {
   if (parseInt(totalSeconds / 60) == totalMin) {
     error_message("Time Exceeded");
@@ -157,27 +158,33 @@ function openForm() {
   document.getElementById("myForm").style.display = "block";
   form.classList.add("show");
 }
+
 function openForm2() {
   document.getElementById("myForm2").style.display = "block";
   form2.classList.add("show");
 }
+
 function openForm3(event) {
   let target = event.target;
   let outerDiv = target.closest(".log_entry");
   outerDiv.nextElementSibling.style.display = "block";
   outerDiv.nextElementSibling.classList.add("show");
 }
+
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
   form.classList.remove("show");
 }
+
 function closeForm2() {
   document.getElementById("myForm2").style.display = "none";
   form2.classList.remove("show");
 }
+
 function closeForm3() {
   form3.style.display = "none";
 }
+
 function deletelog(event) {
   let response = confirm("Are you sure you want to delete the log ?");
   if (response) {
@@ -197,6 +204,7 @@ function deletelog(event) {
     console.log(userData);
   }
 }
+
 function resumebutton(event) {
   if (globalPlayPauseElement != null) {
     totalSeconds = 0;
@@ -220,6 +228,7 @@ function resumebutton(event) {
   globalPlayPauseElement = tempelement.nextElementSibling;
   resume(logMin, logSec);
 }
+
 function stopResumeButton(event) {
   globalPlayPauseElement = null;
   let target = event.target;
@@ -230,11 +239,13 @@ function stopResumeButton(event) {
   totalSeconds = 0;
   updateTotal();
 }
+
 function addLogTab(id) {
   let clonedLogTab = logtab.cloneNode(true);
   clonedLogTab.id = id;
   logger.appendChild(clonedLogTab);
 }
+
 function addDataToLog() {
   let taskNameValue = data[count]["taskName"];
   let tagNameValue = data[count]["tag"];
@@ -255,6 +266,7 @@ function addDataToLog() {
   updateTotal();
   saveData();
 }
+
 function updateElements(
   taskNameValue,
   tagNameValue,
@@ -284,6 +296,7 @@ function updateElements(
 
   durationSec.innerText = durationSecValue;
 }
+
 function updatemin() {
   let min = document.querySelectorAll(".logmin");
   let sec = document.querySelectorAll(".logsec");
@@ -291,6 +304,7 @@ function updatemin() {
   let totalSec = 0;
   updateTotal();
 }
+
 function updateTotal() {
   let min = document.querySelectorAll(".logmin");
   let sec = document.querySelectorAll(".logsec");
@@ -309,6 +323,7 @@ function updateTotal() {
     "todayseconds"
   ).innerText = pad(totalSec % 60);
 }
+
 function save_data(taskname, tagname, duration) {
   if (taskname == undefined || taskname == "null") {
     taskname = "N/A";
@@ -322,12 +337,14 @@ function save_data(taskname, tagname, duration) {
     duration: duration,
   };
 }
+
 function reset() {
   new_task_button.innerText = "+ Start new task";
   taskName.innerText = "";
   tagName.innerText = "";
   duration.value = "";
 }
+
 function currentTime() {
   let date = new Date();
   let realTime = date.toLocaleString("en-US", {
@@ -337,14 +354,17 @@ function currentTime() {
   });
   return realTime;
 }
+
 function error_message(str) {
   clearInterval(timeExceed);
   errormessage.innerText = str;
   notificationLabel.style.display = "flex";
 }
+
 function closenotification() {
   notificationLabel.style.display = "none";
 }
+
 function resume(min, sec) {
   let runMin = min.innerText;
   let runSec = sec.innerText;
@@ -355,23 +375,28 @@ function resume(min, sec) {
     min.innerHTML = pad(parseInt(totalSeconds / 60));
   }, 1000);
 }
+
 function showHistory() {
   historyPanel.style.display = "flex";
 }
+
 function start_timer() {
   timer_interval = setInterval(setTime, 1000);
 }
+
 function stop_timer(min, sec) {
   clearInterval(timer_interval);
   sec.innerHTML = "00";
   min.innerHTML = "00";
   totalSeconds = 0;
 }
+
 function setTime() {
   ++totalSeconds;
   secondsLabel.innerHTML = pad(totalSeconds % 60);
   minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
 }
+
 function pad(val) {
   var valString = val + "";
   if (valString.length < 2) {
@@ -380,6 +405,7 @@ function pad(val) {
     return valString;
   }
 }
+
 function updateDataToLog() {
   let data = Object.keys(userData[username]);
   if (data.length >= 1) {
@@ -402,9 +428,12 @@ function updateDataToLog() {
   }
   count = data[data.length - 1].replace(/\D/g, "");
 }
+
 function logout() {
   location.replace("http://localhost:8000/index.html");
 }
+
 function showlogout() {
   form3.style.display = "flex";
 }
+
