@@ -8,6 +8,7 @@ const emailAccount = document.getElementById("emailId");
 let username;
 let userData = {};
 let totalDuration;
+let nickName;
 
 const taskName = document.getElementById("taskname");
 const tagName = document.getElementById("tagname");
@@ -21,6 +22,12 @@ const historyPanel = document.getElementById("history");
 const logtab = document.getElementById("log1");
 const logger = document.getElementById("logger");
 const errormessage = document.getElementById("errormessage");
+const timestamp = document.getElementById("timestamp");
+const taskNameEntry = document.getElementById("taskname_entry");
+
+let date = new Date();
+let today = date.toDateString();
+console.log(today);
 
 let taskNameContent;
 let tagNameContent;
@@ -37,7 +44,6 @@ let totalMin;
 let data = {};
 let globalPlayPauseElement = null;
 
-
 let timeExceed = setInterval(() => {
   if (parseInt(totalSeconds / 60) == totalMin) {
     error_message("Time Exceeded");
@@ -50,6 +56,9 @@ taskName.addEventListener("change", function () {
 tagName.addEventListener("change", function () {
   tagNameContent = tagName.value;
 });
+taskNameEntry.addEventListener("change", function () {
+  console.log("asdf")
+})
 create_task_button.addEventListener("click", function () {
   if (taskNameContent != undefined) {
     new_task_button.innerText = taskNameContent;
@@ -119,12 +128,16 @@ pauseButton.addEventListener("click", function () {
 new_task_button.addEventListener("click", () => {
   openForm();
 });
+logger.addEventListener("change", function () {
+  console.log("asdfj");
+});
 async function getdata() {
   let user = await fetch("http://localhost:8000/getusername");
   if (user.ok) {
     let userdetails = await user.json();
     emailAccount.innerText = username = userdetails["username"];
-    name.innerText = userdetails["nickname"];
+    nickName = userdetails["nickname"];
+    name.innerText = nickName;
   }
 }
 (async () => {
@@ -249,17 +262,20 @@ function addLogTab(id) {
 function addDataToLog() {
   let taskNameValue = data[count]["taskName"];
   let tagNameValue = data[count]["tag"];
+  let timestamp = data[count]["date"];
   let durationMinValue = data[count]["duration"].slice(0, 2);
   let durationSecValue = data[count]["duration"].slice(-2);
   updateElements(
     taskNameValue,
     tagNameValue,
+    timestamp,
     durationMinValue,
     durationSecValue
   );
   userData[username][`log${count}`] = [
     taskNameValue,
     tagNameValue,
+    timestamp,
     durationMinValue,
     durationSecValue,
   ];
@@ -270,6 +286,7 @@ function addDataToLog() {
 function updateElements(
   taskNameValue,
   tagNameValue,
+  timestamp,
   durationMinValue,
   durationSecValue
 ) {
@@ -283,7 +300,11 @@ function updateElements(
       .lastElementChild;
 
   tagNameElement.innerText = tagNameValue;
+  let day =
+    logger.lastElementChild.firstElementChild.firstElementChild
+      .nextElementSibling;
 
+  day.innerText = timestamp;
   let durationMin =
     logger.lastElementChild.firstElementChild.lastElementChild.lastElementChild
       .previousElementSibling.firstElementChild;
@@ -316,12 +337,10 @@ function updateTotal() {
   for (let iter = 0; iter < sec.length; iter++) {
     totalSec += parseInt(sec[iter].innerText);
   }
-  document.getElementById("totalminutes").innerText = document.getElementById(
-    "todayminutes"
-  ).innerText = pad(parseInt(totalSec / 60) + totalMin);
-  document.getElementById("totalseconds").innerText = document.getElementById(
-    "todayseconds"
-  ).innerText = pad(totalSec % 60);
+  document.getElementById("todayminutes").innerText = pad(
+    parseInt(totalSec / 60) + totalMin
+  );
+  document.getElementById("todayseconds").innerText = pad(totalSec % 60);
 }
 
 function save_data(taskname, tagname, duration) {
@@ -334,6 +353,7 @@ function save_data(taskname, tagname, duration) {
   data[count] = {
     taskName: taskname,
     tag: tagname,
+    date: today,
     duration: duration,
   };
 }
@@ -414,7 +434,8 @@ function updateDataToLog() {
       userData[username][data[0]][0],
       userData[username][data[0]][1],
       userData[username][data[0]][2],
-      userData[username][data[0]][3]
+      userData[username][data[0]][3],
+      userData[username][data[0]][4]
     );
     for (let iter = 1; iter < data.length; iter++) {
       addLogTab(data[iter]);
@@ -422,7 +443,8 @@ function updateDataToLog() {
         userData[username][`${data[iter]}`][0],
         userData[username][`${data[iter]}`][1],
         userData[username][`${data[iter]}`][2],
-        userData[username][`${data[iter]}`][3]
+        userData[username][`${data[iter]}`][3],
+        userData[username][`${data[iter]}`][4]
       );
     }
   }
@@ -437,3 +459,30 @@ function showlogout() {
   form3.style.display = "flex";
 }
 
+function exportData() {
+  let exportableData = [["Taskname", "TagName", "Timestamp", "Min", "Sec"]];
+  let data = Object.values(userData[username]);
+  for (let iter = 0; iter < data.length; iter++) {
+    exportableData.push(data[iter]);
+  }
+  let response = confirm("Do you want to Download the data as a csv");
+  if (response) {
+    downloadCsv(
+      `${nickName}.csv`,
+      json2csv.parse(exportableData, {
+        header: false,
+      })
+    );
+  }
+}
+
+function downloadCsv(filename, csvData) {
+  const element = document.createElement("a");
+  element.setAttribute("href", `data:text/csv;charset=utf-8,${csvData}`);
+  element.setAttribute("download", filename);
+  element.style.display = "none";
+
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}

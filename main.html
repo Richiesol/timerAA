@@ -35,7 +35,12 @@
         <label for="brandname" class="brandname">Timeit</label>
       </div>
       <div class="profile">
-        <img src="Resource/Group 1profile.png" alt="asdf" class="profile_pic" onclick="showlogout()"/>
+        <img
+          src="Resource/Group 1profile.png"
+          alt="asdf"
+          class="profile_pic"
+          onclick="showlogout()"
+        />
         <div class="profilename">
           <label for="name" class="name" id="name">Richie Soshan</label>
           <label for="email id" id="emailId">richie@gmail.com</label>
@@ -49,13 +54,10 @@
     <div class="edit_popup" id="myForm3">
       <div class="blocker" onclick="closeForm3()"></div>
       <form class="form-container">
-        <button
-          type="button"
-          class="delete"
-          onclick="logout()"
-        >
-          LOGOUT
-        </button>
+        <button type="button" class="delete" onclick="logout()">LOGOUT</button>
+      </form>
+      <form class="form-container">
+        <button type="button" class="delete" onclick="exportData()">Export</button>
       </form>
     </div>
     <div class="mid_section">
@@ -155,17 +157,10 @@
           <label for="history_text" class="history_text">History</label>
         </div>
       </div>
-      <div class="total_time_container">
-        <label for="time_total" class="total_time_text">Total time:</label>
-        <div for="timer" class="total_time">
-          <label id="totalminutes">00</label>:
-          <label id="totalseconds">00</label>
-        </div>
-      </div>
       <div class="timelog">
         <div class="timelog_panel" id="timelog_panel">
           <div class="menubar">
-            <label for="date" class="day">Today</label>
+            <label for="date" class="day">Total Time:</label>
             <div for="timer" class="daily_time">
               <label id="todayminutes">00</label>:
               <label id="todayseconds">00</label>
@@ -175,28 +170,17 @@
             <div class="log" id="log1">
               <div class="log_entry">
                 <div class="tasktag">
-                  <label
-                    for="date"
-                    class="taskname_entry"
-                    id="taskname_entry1"
-                    contenteditable="true"
+                  <label for="date" class="taskname_entry" id="taskname_entry" contenteditable="true"
                     >Task name</label
                   >
-                  <label
-                    for="date"
-                    class="taskname_entry"
-                    id="taskname_entry1"
-                    contenteditable="true"
+                  <label for="date" class="taskname_entry" id="taskname_entry1"
                     >|</label
                   >
-                  <label
-                    for="date"
-                    class="taskname_entry"
-                    id="tagname"
-                    contenteditable="true"
+                  <label for="date" class="taskname_entry" id="tagname" contenteditable="true"
                     >Task name</label
                   >
                 </div>
+                <label for="datestamp" id="timestamp">2 October 2022</label>
                 <div class="time_play">
                   <img
                     src="Resource/Group 1playbutton (1).svg"
@@ -230,6 +214,9 @@
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/json2csv"></script>
     <script src="script.js"></script>
+    
   </body>
 </html>

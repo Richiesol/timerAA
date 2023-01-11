@@ -43,18 +43,18 @@ body {
   flex-direction: column;
   width: auto;
 }
-.notification{
-  display:none;
+.notification {
+  display: none;
   background-color: red;
-  width:20%;
-  height:10%;
-  position:fixed;
-  top:12%;
-  right:0%;
+  width: 20%;
+  height: 10%;
+  position: fixed;
+  top: 12%;
+  right: 0%;
   border-radius: 7px;
-  
 }
-img,button{
+img,
+button {
   cursor: pointer;
 }
 .mid_section {
@@ -137,13 +137,13 @@ img,button{
 }
 
 .play {
-  display:block;
+  display: block;
   width: 5%;
   padding-right: 2%;
   padding-left: 2%;
 }
-.stop{
-  display:none;
+.stop {
+  display: none;
   width: 5%;
 }
 .popup {
@@ -208,33 +208,34 @@ img,button{
 }
 .edit_popup {
   display: none;
-    position: absolute;
-    border-radius: 7px;
-    justify-content: center;
-    width: 10%;
-    top: 10%;
-    right: 5%;
-    z-index: 10;
+  position: absolute;
+  border-radius: 7px;
+  justify-content: center;
+  width: 10%;
+  top: 10%;
+  flex-direction: column;
+  right: 8%;
+  z-index: 10;
 }
 
-.asdf{
+.asdf {
   display: flex;
-    position: absolute;
-    border-radius: 7px;
-    justify-content: center;
-    width: 10%;
-    /* height: 75%; */
-    top: 10%;
-    right: 5%;
-    z-index: 10;
+  position: absolute;
+  border-radius: 7px;
+  justify-content: center;
+  width: 10%;
+  /* height: 75%; */
+  top: 10%;
+  right: 5%;
+  z-index: 10;
 }
 .delete {
   font-size: large;
   font-family: "Alegreya Sans";
   border: none;
 }
-.delete-button{
-  width:500px;
+.delete-button {
+  width: 500px;
 }
 .blocker {
   position: fixed;
@@ -244,17 +245,18 @@ img,button{
   right: 0;
   background: rgb(0, 0, 0, 0);
 }
-.historyPanel{
+.historyPanel {
   display: none;
   flex-direction: column;
-  width:100%;
-  height:69%
+  width: 100%;
+  height: 69%;
 }
 .history_section {
   justify-content: center;
   display: flex;
   height: 10%;
   width: 100%;
+  margin-bottom: 3%;
 }
 .history {
   justify-content: center;
@@ -301,21 +303,20 @@ img,button{
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #00000042; 
-  border-radius:10px;
+  background: #00000042;
+  border-radius: 10px;
   display: none;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(136, 136, 136, 0.589); 
-  border-radius:10px;
+  background: rgba(136, 136, 136, 0.589);
+  border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
- 
+  background: #555;
 }
 .timelog_panel {
   height: auto;
@@ -323,7 +324,7 @@ img,button{
   justify-content: start;
   flex-direction: column;
   overflow-y: auto;
-  overflow-x:clip;
+  overflow-x: clip;
 }
 .menubar {
   display: flex;
@@ -341,7 +342,7 @@ img,button{
 .day {
   padding-left: 2%;
   text-align: center;
-  font-family: "Alegreya";
+  font-family: "Alegreya Sans";
   font-weight: 600;
   font-size: 20px;
 }
@@ -352,7 +353,7 @@ img,button{
   font-size: 20px;
   padding-right: 5%;
 }
-.log{
+.log {
   display: flex;
 }
 .log_entry {
@@ -377,12 +378,12 @@ img,button{
   font-size: 20px;
 }
 .resume {
-  display:block;
+  display: block;
   width: 20%;
   height: 55%;
 }
-.pauseLog{
-  display:none;
+.pauseLog {
+  display: none;
   width: 20%;
   height: 55%;
 }
@@ -393,10 +394,10 @@ img,button{
   font-size: 20px;
   color: rgba(0, 0, 0, 0.428);
   padding-right: 5%;
-  border:none;
+  border: none;
 }
-.duration:focus{
-  border:none;
+.duration:focus {
+  border: none;
   outline: none;
 }
 .time_play {
@@ -418,35 +419,34 @@ label:focus {
   outline: none;
 }
 
-.logger{
+.logger {
   display: flex;
-    height: max-content;
-    width: 100%;
-    justify-content: start;
-    flex-direction: column-reverse;
+  height: max-content;
+  width: 100%;
+  justify-content: start;
+  flex-direction: column-reverse;
 }
 
-.tasktag{
+.tasktag {
   display: flex;
-    width: 50%;
-    padding-left: 1%;
+  width: 50%;
+  padding-left: 1%;
 }
 
-.closemodal{
+.closemodal {
   color: #000000;
   float: right;
   font-size: 28px;
   font-weight: bold;
-  border:none;
+  border: none;
   align-self: self-start;
   height: fit-content;
 }
-.errormessage{
+.errormessage {
   color: white;
   align-items: center;
   justify-content: center;
-  width:90%;
+  width: 90%;
   display: flex;
-  height:100%;
+  height: 100%;
 }
-
