@@ -37,6 +37,12 @@ password.addEventListener("change", function () {
   Password = password.value;
 });
 
+
+/**
+ *function to sanve the data into an object called User data and send on submit of the form
+ *
+ * @param {*} event
+ */
 function submit_(event) {
   userData = {
     nickname: nickName,
@@ -48,6 +54,11 @@ function submit_(event) {
   connectServer(userData);
 }
 
+/**
+ *function to save the data to the server and wait for the response
+ *
+ * @param {*} userData: contains the user data
+ */
 async function connectServer(userData) {
   console.log(userData)
   let response = await fetch("http://localhost:8000/datasend", {

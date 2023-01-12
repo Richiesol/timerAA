@@ -3,6 +3,12 @@ const password = document.getElementById("password");
 const signinButton = document.getElementById("login");
 
 var form = document.getElementById("myForm");
+
+/**
+ *function to handle the form preventing the defaults
+ *
+ * @param {*} event
+ */
 function handleForm(event) { event.preventDefault(); } 
 form.addEventListener('submit', handleForm);
 var emailID;
@@ -36,6 +42,11 @@ else{
     signinButton.removeAttribute("disabled");
   }
 });
+
+/**
+ *function to send the emailId to the server and change the route to main.html
+ *
+ */
 function login_(){
   fetch(
     `http://localhost:8000/login?username=${emailID}`

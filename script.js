@@ -44,6 +44,7 @@ let totalMin;
 let data = {};
 let globalPlayPauseElement = null;
 
+
 let timeExceed = setInterval(() => {
   if (parseInt(totalSeconds / 60) == totalMin) {
     error_message("Time Exceeded");
@@ -131,6 +132,11 @@ new_task_button.addEventListener("click", () => {
 logger.addEventListener("change", function () {
   console.log("asdfj");
 });
+
+/**
+ *function to fetch the username from the server
+ *
+ */
 async function getdata() {
   let user = await fetch("http://localhost:8000/getusername");
   if (user.ok) {
@@ -146,6 +152,10 @@ async function getdata() {
   await fetchDataFromJson();
 })();
 
+/**
+ *function to fetch data from the data json file 
+ *
+ */
 async function fetchDataFromJson() {
   let response = await fetch(
     `http://localhost:8000/getuserdata?username=${username}`
@@ -157,6 +167,10 @@ async function fetchDataFromJson() {
   }
 }
 
+/**
+ *function to update the data to object
+ *
+ */
 async function saveData() {
   let response = await fetch("http://localhost:8000/datasave", {
     method: "POST",
@@ -167,16 +181,29 @@ async function saveData() {
   });
 }
 
+/**
+ *this opens a modal box for the task name and tag name
+ *
+ */
 function openForm() {
   document.getElementById("myForm").style.display = "block";
   form.classList.add("show");
 }
 
+/**
+ *this opens a modal box for the schedule panel
+ *
+ */
 function openForm2() {
   document.getElementById("myForm2").style.display = "block";
   form2.classList.add("show");
 }
 
+/**
+ *this opens a modal box for logout and export
+ *
+ * @param {*} event
+ */
 function openForm3(event) {
   let target = event.target;
   let outerDiv = target.closest(".log_entry");
@@ -184,20 +211,37 @@ function openForm3(event) {
   outerDiv.nextElementSibling.classList.add("show");
 }
 
+/**
+ *this closes the taskname modal box
+ *
+ */
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
   form.classList.remove("show");
 }
 
+/**
+ *this closes the schedule modal form box
+ *
+ */
 function closeForm2() {
   document.getElementById("myForm2").style.display = "none";
   form2.classList.remove("show");
 }
 
+/**
+ *this closes the logout and export modal form box
+ *
+ */
 function closeForm3() {
   form3.style.display = "none";
 }
 
+/**
+ *function to delete a log from the history
+ *
+ * @param {*} event
+ */
 function deletelog(event) {
   let response = confirm("Are you sure you want to delete the log ?");
   if (response) {
@@ -218,6 +262,11 @@ function deletelog(event) {
   }
 }
 
+/**
+ *the properties to change when the stopped timmer is resumed
+ *
+ * @param {*} event
+ */
 function resumebutton(event) {
   if (globalPlayPauseElement != null) {
     totalSeconds = 0;
@@ -242,6 +291,11 @@ function resumebutton(event) {
   resume(logMin, logSec);
 }
 
+/**
+ *properties to change when the timmer is stopped
+ *
+ * @param {*} event
+ */
 function stopResumeButton(event) {
   globalPlayPauseElement = null;
   let target = event.target;
@@ -253,12 +307,21 @@ function stopResumeButton(event) {
   updateTotal();
 }
 
+/**
+ *function to clone a log and add it to the parent
+ *
+ * @param {*} id : the id of an element
+ */
 function addLogTab(id) {
   let clonedLogTab = logtab.cloneNode(true);
   clonedLogTab.id = id;
   logger.appendChild(clonedLogTab);
 }
 
+/**
+ *function to update the data to the newly added log
+ *
+ */
 function addDataToLog() {
   let taskNameValue = data[count]["taskName"];
   let tagNameValue = data[count]["tag"];
@@ -283,6 +346,15 @@ function addDataToLog() {
   saveData();
 }
 
+/**
+ *function to update the DOM element of the log
+ *
+ * @param {*} taskNameValue: name of the task
+ * @param {*} tagNameValue: name of the tag
+ * @param {*} timestamp: Day stamp
+ * @param {*} durationMinValue: min value
+ * @param {*} durationSecValue: sec value
+ */
 function updateElements(
   taskNameValue,
   tagNameValue,
@@ -318,6 +390,10 @@ function updateElements(
   durationSec.innerText = durationSecValue;
 }
 
+/**
+ *function to update the min section on the lof
+ *
+ */
 function updatemin() {
   let min = document.querySelectorAll(".logmin");
   let sec = document.querySelectorAll(".logsec");
@@ -326,6 +402,10 @@ function updatemin() {
   updateTotal();
 }
 
+/**
+ *function to update the total mins of task completed
+ *
+ */
 function updateTotal() {
   let min = document.querySelectorAll(".logmin");
   let sec = document.querySelectorAll(".logsec");
@@ -343,6 +423,13 @@ function updateTotal() {
   document.getElementById("todayseconds").innerText = pad(totalSec % 60);
 }
 
+/**
+ *function to append the newly added data to an object 
+ *
+ * @param {*} taskname:name of the task
+ * @param {*} tagname:name of the tag
+ * @param {*} duration:total duration of a task
+ */
 function save_data(taskname, tagname, duration) {
   if (taskname == undefined || taskname == "null") {
     taskname = "N/A";
@@ -358,6 +445,10 @@ function save_data(taskname, tagname, duration) {
   };
 }
 
+/**
+ *function to reset the top timmer coloumn
+ *
+ */
 function reset() {
   new_task_button.innerText = "+ Start new task";
   taskName.innerText = "";
@@ -365,6 +456,11 @@ function reset() {
   duration.value = "";
 }
 
+/**
+ *function to determine the current time 
+ *
+ * @return {*} 
+ */
 function currentTime() {
   let date = new Date();
   let realTime = date.toLocaleString("en-US", {
@@ -375,16 +471,31 @@ function currentTime() {
   return realTime;
 }
 
+/**
+ *function to pop up an error message to handle errors
+ *
+ * @param {*} str
+ */
 function error_message(str) {
   clearInterval(timeExceed);
   errormessage.innerText = str;
   notificationLabel.style.display = "flex";
 }
 
+/**
+ *function to close the notification bar
+ *
+ */
 function closenotification() {
   notificationLabel.style.display = "none";
 }
 
+/**
+ *function to resume the timer from where it stoped
+ *
+ * @param {*} min:value of the min 
+ * @param {*} sec:value of the sec
+ */
 function resume(min, sec) {
   let runMin = min.innerText;
   let runSec = sec.innerText;
@@ -396,14 +507,28 @@ function resume(min, sec) {
   }, 1000);
 }
 
+/**
+ *function to show the history panel
+ *
+ */
 function showHistory() {
   historyPanel.style.display = "flex";
 }
 
+/**
+ *function to start a timer
+ *
+ */
 function start_timer() {
   timer_interval = setInterval(setTime, 1000);
 }
 
+/**
+ *function to stop a timer
+ *
+ * @param {*} min
+ * @param {*} sec
+ */
 function stop_timer(min, sec) {
   clearInterval(timer_interval);
   sec.innerHTML = "00";
@@ -411,12 +536,22 @@ function stop_timer(min, sec) {
   totalSeconds = 0;
 }
 
+/**
+ *function to set the value of the min and sec to the DOM element
+ *
+ */
 function setTime() {
   ++totalSeconds;
   secondsLabel.innerHTML = pad(totalSeconds % 60);
   minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
 }
 
+/**
+ *function to provide 0 padding to the min and sec values
+ *
+ * @param {*} val:string - to be padded
+ * @return {*} string with padding
+ */
 function pad(val) {
   var valString = val + "";
   if (valString.length < 2) {
@@ -426,6 +561,10 @@ function pad(val) {
   }
 }
 
+/**
+ *function to update Data to the log 
+ *
+ */
 function updateDataToLog() {
   let data = Object.keys(userData[username]);
   if (data.length >= 1) {
@@ -451,14 +590,26 @@ function updateDataToLog() {
   count = data[data.length - 1].replace(/\D/g, "");
 }
 
+/**
+ *function to run when the user presses the logout button
+ *
+ */
 function logout() {
   location.replace("http://localhost:8000/index.html");
 }
 
+/**
+ *function to show the logout button
+ *
+ */
 function showlogout() {
   form3.style.display = "flex";
 }
 
+/**
+ *function to export the data of a user into a csv format
+ *
+ */
 function exportData() {
   let exportableData = [["Taskname", "TagName", "Timestamp", "Min", "Sec"]];
   let data = Object.values(userData[username]);
@@ -476,6 +627,12 @@ function exportData() {
   }
 }
 
+/**
+ *function to create a downloadable file to be downloaded
+ *
+ * @param {*} filename
+ * @param {*} csvData
+ */
 function downloadCsv(filename, csvData) {
   const element = document.createElement("a");
   element.setAttribute("href", `data:text/csv;charset=utf-8,${csvData}`);
