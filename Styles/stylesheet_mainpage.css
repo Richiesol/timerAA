@@ -43,17 +43,19 @@ body {
   flex-direction: column;
   width: auto;
 }
-.notification{
-  display:none;
+.notification {
+  display: none;
   background-color: red;
-  width:20%;
-  height:10%;
-  position:fixed;
-  top:12%;
-  right:0%;
+  width: 20%;
+  height: 10%;
+  position: fixed;
+  top: 12%;
+  right: 0%;
   border-radius: 7px;
-  animation-name: example;
-  animation-duration: 4s;
+}
+img,
+button {
+  cursor: pointer;
 }
 .mid_section {
   display: flex;
@@ -135,16 +137,14 @@ body {
 }
 
 .play {
-  display:block;
+  display: block;
   width: 5%;
   padding-right: 2%;
   padding-left: 2%;
 }
-.pause{
-  display:none;
+.stop {
+  display: none;
   width: 5%;
-  padding-right: 2%;
-  padding-left: 2%;
 }
 .popup {
   display: none;
@@ -208,18 +208,34 @@ body {
 }
 .edit_popup {
   display: none;
+  position: absolute;
   border-radius: 7px;
   justify-content: center;
   width: 10%;
-  height:75%;
-  top: 75%;
-  right: 60%;
+  top: 10%;
+  flex-direction: column;
+  right: 8%;
+  z-index: 10;
+}
+
+.asdf {
+  display: flex;
+  position: absolute;
+  border-radius: 7px;
+  justify-content: center;
+  width: 10%;
+  /* height: 75%; */
+  top: 10%;
+  right: 5%;
   z-index: 10;
 }
 .delete {
   font-size: large;
   font-family: "Alegreya Sans";
   border: none;
+}
+.delete-button {
+  width: 500px;
 }
 .blocker {
   position: fixed;
@@ -229,17 +245,18 @@ body {
   right: 0;
   background: rgb(0, 0, 0, 0);
 }
-.historyPanel{
+.historyPanel {
   display: none;
   flex-direction: column;
-  width:100%;
-  height:69%
+  width: 100%;
+  height: 69%;
 }
 .history_section {
   justify-content: center;
   display: flex;
   height: 10%;
   width: 100%;
+  margin-bottom: 3%;
 }
 .history {
   justify-content: center;
@@ -276,25 +293,47 @@ body {
 }
 .timelog {
   width: 100%;
-  height: 40%;
+  height: 60%;
   display: flex;
   justify-content: center;
 }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #00000042;
+  border-radius: 10px;
+  display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.589);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 .timelog_panel {
-  display: flex;
   height: auto;
   width: 60%;
   justify-content: start;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x: clip;
 }
 .menubar {
   display: flex;
   position: sticky;
+  top: 0%;
   background-color: #fff;
-  width: 100%;
+  width: 99.5%;
   align-items: center;
-  height: 25%;
-  min-height: 25%;
+  height: 15%;
   border: 2px solid rgba(0, 0, 0, 0.19);
   border-bottom: 0;
   border-radius: 7px 7px 0 0;
@@ -303,7 +342,7 @@ body {
 .day {
   padding-left: 2%;
   text-align: center;
-  font-family: "Alegreya";
+  font-family: "Alegreya Sans";
   font-weight: 600;
   font-size: 20px;
 }
@@ -314,22 +353,23 @@ body {
   font-size: 20px;
   padding-right: 5%;
 }
-.log{
+.log {
   display: flex;
-  width:125%;
-  height:25%;
-  min-height: 25%;
 }
 .log_entry {
   display: flex;
   background-color: #fff;
-  width: 80%;
+  width: 100%;
   align-items: center;
   height: 100%;
   border: 2px solid rgba(155, 155, 155, 0.466);
   border-radius: 0 0 0 0;
   justify-content: space-between;
 }
+/* .delete-button{
+  align-self: center; 
+  height:100%;
+} */
 .taskname_entry {
   padding-left: 2%;
   text-align: center;
@@ -338,13 +378,13 @@ body {
   font-size: 20px;
 }
 .resume {
-  display:block;
-  width: 25%;
+  display: block;
+  width: 20%;
   height: 55%;
 }
-.pauseLog{
-  display:none;
-  width: 25%;
+.pauseLog {
+  display: none;
+  width: 20%;
   height: 55%;
 }
 .duration {
@@ -354,10 +394,10 @@ body {
   font-size: 20px;
   color: rgba(0, 0, 0, 0.428);
   padding-right: 5%;
-  border:none;
+  border: none;
 }
-.duration:focus{
-  border:none;
+.duration:focus {
+  border: none;
   outline: none;
 }
 .time_play {
@@ -371,15 +411,42 @@ body {
 .menu {
   display: flex;
   height: 100%;
-  width: 20%;
-  padding-top: 3%;
-  font-weight: 900;
-  font-size: 30px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: rgba(0, 0, 0, 0.315);
-  border: none;
-  background-color: #fff;
+  padding: 5% 5% 5% 0%;
+  width: 15%;
+  align-self: center;
 }
 label:focus {
   outline: none;
+}
+
+.logger {
+  display: flex;
+  height: max-content;
+  width: 100%;
+  justify-content: start;
+  flex-direction: column-reverse;
+}
+
+.tasktag {
+  display: flex;
+  width: 50%;
+  padding-left: 1%;
+}
+
+.closemodal {
+  color: #000000;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  border: none;
+  align-self: self-start;
+  height: fit-content;
+}
+.errormessage {
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  display: flex;
+  height: 100%;
 }
